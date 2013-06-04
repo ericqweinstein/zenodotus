@@ -5,7 +5,8 @@ html(ng-app)
 
     link(rel='stylesheet', href='css/bootstrap.min.css')
     link(rel='stylesheet', href='css/custom.css')
-    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js')
+    script(src='lib/angular/angular.min.js')
+    script(src='book.js')
 
     body
       div.hero-unit
@@ -13,6 +14,8 @@ html(ng-app)
         p.lead Welcome to the Hacker School library!
 
       div.row
-        div.span12
-          li(ng-repeat='book in books')
+        div(ng-controller='BookCtrl')
+          p.lead.notification We currently have {{count()}} and counting.
+
+        div(ng-repeat='book in books')
 

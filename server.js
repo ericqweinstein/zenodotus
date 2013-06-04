@@ -5,7 +5,8 @@ var express = require('express')
   , http    = require('http')
   , path    = require('path')
   , routes  = require('./routes')
-  , models  = require('./models/schema');
+  , book    = require('./models/book')
+  , user    = require('./models/user');
 
 // Set up the server.
 var app = express();
@@ -16,7 +17,7 @@ app.set('view engine', 'jade');
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routing
+// Our lone route.
 app.get('/', function(req, res) {
   res.render('index');
 });
