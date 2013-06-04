@@ -11,11 +11,13 @@ html(ng-app)
     body
       div.hero-unit
         h1 Hacker School Library
-        p.lead Welcome to the Hacker School library!
+        p.lead.indent Programming books and resources
 
       div.row
         div(ng-controller='BookCtrl')
           p.lead.notification We currently have {{count()}} and counting.
 
-        div(ng-repeat='book in books')
+          ul
+            li(ng-repeat='book in books')
+              {{book.text}}
 
