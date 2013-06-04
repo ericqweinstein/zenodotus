@@ -52,6 +52,15 @@ db.once('open', function cb() {
         function(v) { return v.match(/(?:\S+)@(?:\S+)/); },
         'Please enter a valid e-mail address.'
       ]
+    },
+
+    admin: {
+      type: Boolean,
+      required: true,
+      validate: [
+        function(v) { return typeof(v) == 'boolean'; },
+        'Admin state must be true or false.'
+      ]
     }
   });
 
