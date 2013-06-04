@@ -1,0 +1,11 @@
+{
+  "name": "hs-library",
+  "description": "Tracking books in the Hacker School Library.",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "3.2.x",
+    "jade": "0.31.x",
+    "mocha": "1.10.x"
+  }
+}
+
