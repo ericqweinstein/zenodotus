@@ -15,7 +15,9 @@ app.set('port', process.env.PORT || 8888);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
+// Check models/ for Angular controller JS.
+app.use(express.static('models'));
 
 // Our lone route.
 app.get('/', function(req, res) {
