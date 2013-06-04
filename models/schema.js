@@ -1,10 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/test');
 
 var db = mongoose.createConnection('localhost', 'hs-library');
-// var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function cb() {
 
@@ -24,6 +22,15 @@ db.once('open', function cb() {
       validate: [
         function(v) { return v >= 0; },
         'Quantity must be positive.'
+      ]
+    },
+
+    available: {
+      type: Boolean,
+      required: true,
+      validate: [
+        function(v) { return typeof(v) == 'boolean'; },
+        'Availability must be true or false.'
       ]
     }
   });
