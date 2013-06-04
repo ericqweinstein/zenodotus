@@ -3,10 +3,7 @@
 // Pull in the modules we'll need.
 var express = require('express')
   , http    = require('http')
-  , path    = require('path')
-  , routes  = require('./routes')
-  , book    = require('./models/book')
-  , user    = require('./models/user');
+  , routes  = require('./routes');
 
 // Set up the server.
 var app = express();
