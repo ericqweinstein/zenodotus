@@ -16,9 +16,9 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static('public'));
-app.use(express.favicon('public/img/favicon.ico'));
 // Check controllers/ for Angular controller JS.
 app.use(express.static('controllers'));
+app.use(express.favicon('public/img/favicon.ico'));
 
 // Routes
 app.get('/', function(req, res) {
