@@ -13,6 +13,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(app.router);
 app.use(express.static('public'));
+app.use(express.favicon('public/img/favicon.ico'));
 // Check controllers/ for Angular controller JS.
 app.use(express.static('controllers'));
 
