@@ -1,5 +1,5 @@
 'use strict';
 
 var schema = require('./schema');
-var User   = schema.User;
+var User   = schema.user;
 
