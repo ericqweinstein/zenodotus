@@ -13,8 +13,8 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(app.router);
 app.use(express.static('public'));
-// Check models/ for Angular controller JS.
-app.use(express.static('models'));
+// Check controllers/ for Angular controller JS.
+app.use(express.static('controllers'));
 
 // Our lone route.
 app.get('/', function(req, res) {
