@@ -27,7 +27,7 @@ app.get('/', function(req, res) {
 
 app.get('/books', function(req, res) {
   var books = db.book.find();
-  res.render('books');
+  res.render('books', { locals: { books: books } });
 });
 
 // Start the server listening on PORT (prod)
