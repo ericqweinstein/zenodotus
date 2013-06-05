@@ -1,0 +1,24 @@
+doctype 5
+html(ng-app)
+  head
+    title Hacker School Library
+
+    link(rel='stylesheet', href='css/bootstrap.min.css')
+    link(rel='stylesheet', href='css/custom.css')
+    script(src='http://code.jquery.com/jquery-latest.min.js')
+    script(src='js/bootstrap.min.js')
+    script(src='lib/angular/angular.min.js')
+    script(src='book.js')
+
+  body
+    include _header
+
+  div.hero-unit
+    h1 Catalog
+    div.row
+      div(ng-controller='BookCtrl')
+        ul
+          li(ng-repeat 'book in books')
+            i.icon-book
+            a(href='#') {{" " + book.title}}
+
