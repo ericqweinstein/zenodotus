@@ -10,41 +10,17 @@ html(ng-app)
     script(src='lib/angular/angular.min.js')
     script(src='book.js')
 
-    body
-      header.navbar.navbar-fixed-top.navbar-inverse
-        div.navbar-inner
-          div.container
-            a.logo(href='/') HS Library
-            nav
-              ul.nav.pull-right
-                // Trigger modal
-                a.logo(href='#modal', role='button', data-toggle='modal') Log In
+  body
+    include _header
 
-      // Modal
-      div.modal.hide.fade#modal(tabindex='-1', role='dialog', aria-labelledby='modalLabel', aria-hidden='true')
-        div.modal-header
-          button.close(type='button', data-dismiss='modal', aria-hidden='true') x
-          h3#modalLabel Log In
-        div.modal-body
-          form
-            p E-mail:
-            input(type='text', name='name')
-            br
-            p Password:
-            input(type='password', name='password')
-        div.modal-footer
-          button.btn(data-dismiss='modal', aria-hidden='true') Close
-          button.btn.btn-primary Log In
-      div.hero-unit
-        h1 Hacker School Library
-        p.lead.indent Programming books and resources
+    div.hero-unit
+      h1 Hacker School Library
+      p.lead.indent Programming books and resources
 
-      div.row
-        div(ng-controller='BookCtrl')
-          p.lead.notification We currently have {{count()}} and counting.
+    div.row
+      div(ng-controller='BookCtrl')
+        p.lead.notification We currently have {{count()}} and counting.
 
-          ul
-            li(ng-repeat='book in books')
-              i.icon-book
-              a(href='#'){{" " + book.text}}
+        div.span7
+        a(href='/books').btn.btn-success.btn-large Check them out
 
