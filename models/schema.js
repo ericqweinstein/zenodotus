@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 
 var db = mongoose.createConnection('localhost', 'hs-library');
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', console.error.bind(console, 'Connection error:'));
 db.once('open', function cb() {
 
   var bookSchema = mongoose.Schema({
@@ -11,7 +11,7 @@ db.once('open', function cb() {
       type: String,
       required: true,
       validate: [
-        function(v) { return v.match(/\S+/) && v != ''; },
+        function(v) { return v.match(/\S+/) && v !== ''; },
         'Book title must not be blank.'
       ]
     },
@@ -20,7 +20,7 @@ db.once('open', function cb() {
       type: Number,
       required: true,
       validate: [
-        function(v) { return !isNaN(v) && Math.ceil(Math.log(v + 1) / Math.LN10) == 13; },
+        function(v) { return !isNaN(v) && Math.ceil(Math.log(v + 1) / Math.LN10) === 13; },
         'ISBN must be a 13-digit number without dashes.'
       ]
     },
@@ -38,7 +38,7 @@ db.once('open', function cb() {
       type: Boolean,
       required: true,
       validate: [
-        function(v) { return typeof(v) == 'boolean'; },
+        function(v) { return typeof(v) === 'boolean'; },
         'Availability must be true or false.'
       ]
     }
@@ -49,7 +49,7 @@ db.once('open', function cb() {
       type: String,
       required: true,
       validate: [
-        function(v) { return v.match(/\S+/) && v != ''; },
+        function(v) { return v.match(/\S+/) && v !== ''; },
         'Name must not be blank.'
       ]
     },
@@ -67,7 +67,7 @@ db.once('open', function cb() {
       type: Boolean,
       required: true,
       validate: [
-        function(v) { return typeof(v) == 'boolean'; },
+        function(v) { return typeof(v) === 'boolean'; },
         'Admin state must be true or false.'
       ]
     },
