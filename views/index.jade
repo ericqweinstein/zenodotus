@@ -5,6 +5,8 @@ html(ng-app)
 
     link(rel='stylesheet', href='css/bootstrap.min.css')
     link(rel='stylesheet', href='css/custom.css')
+    script(src='http://code.jquery.com/jquery-latest.min.js')
+    script(src='js/bootstrap.min.js')
     script(src='lib/angular/angular.min.js')
     script(src='book.js')
 
@@ -15,7 +17,24 @@ html(ng-app)
             a.logo(href='/') HS Library
             nav
               ul.nav.pull-right
-                a.logo(href='/') Log In
+                // Trigger modal
+                a.logo(href='#modal', role='button', data-toggle='modal') Log In
+
+                // Modal
+      div.modal.hide.fade#modal(tabindex='-1', role='dialog', aria-labelledby='modalLabel', aria-hidden='true')
+        div.modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden='true') x
+          h3#modalLabel Log In
+        div.modal-body
+          form
+            p E-mail:
+            input(type='text', name='name')
+            br
+            p Password:
+            input(type='password', name='password')
+        div.modal-footer
+          button.btn(data-dismiss='modal', aria-hidden='true') Close
+          button.btn.btn-primary Log In
       div.hero-unit
         h1 Hacker School Library
         p.lead.indent Programming books and resources
