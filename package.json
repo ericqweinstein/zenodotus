@@ -1,5 +1,5 @@
 {
-  "name": "hs-library",
+  "name": "zenodotus",
   "description": "Tracking books in the Hacker School Library.",
   "version": "0.0.1",
   "dependencies": {
