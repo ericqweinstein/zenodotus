@@ -16,12 +16,21 @@ db.once('open', function cb() {
       ]
     },
 
+    isbn: {
+      type: Number,
+      required: true,
+      validate: [
+        function(v) { return !isNaN(v) && Math.ceil(Math.log(v + 1) / Math.LN10) == 13; },
+        'ISBN must be a 13-digit number without dashes.'
+      ]
+    },
+
     quantity: {
       type: Number,
       required: true,
       validate: [
-        function(v) { return v >= 0; },
-        'Quantity must be positive.'
+        function(v) { return v > 0; },
+        'Quantity must be greater than zero.'
       ]
     },
 
@@ -61,6 +70,10 @@ db.once('open', function cb() {
         function(v) { return typeof(v) == 'boolean'; },
         'Admin state must be true or false.'
       ]
+    },
+
+    books: {
+      type: Array
     }
   });
 
