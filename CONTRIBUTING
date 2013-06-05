@@ -1,0 +1,6 @@
+1. Fork
+2. Create (git checkout -b fancy-new-feature)
+3. Commit (git commit -m 'Fanciness')
+4. Push (git push origin fancy-new-feature)
+5. Ye Olde Pulle Request
+
