@@ -6,6 +6,9 @@ zenodotus.factory('Book', ['$resource', function($resource) {
   return $resource('/books/:id', {id: '@id'});
 }]);
 
+var Book = $resource('/books/:id', {id: '@id'});
+
+/*
 zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
   $scope.books = Book.query();
 
@@ -18,7 +21,7 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
     });
   };
 }]);
-
+*/
 function BookCtrl($scope) {
   $scope.count = function() {
     var count = 0;
@@ -28,5 +31,7 @@ function BookCtrl($scope) {
     var pluralization = count == 1 ? " book" : " books"
     return count + pluralization;
   };
+
+  $scope.books = Book.query();
 }
 
