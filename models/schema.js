@@ -2,8 +2,11 @@
 
 var mongoose = require('mongoose');
 
-var db = mongoose.createConnection('localhost', 'hs-library');
+var db = mongoose.createConnection('mongodb://localhost/hs-library');
 db.on('error', console.error.bind(console, 'Connection error:'));
+db.on('open', function() {
+  console.log('MongoDB is connected.');
+});
 
 var bookSchema = mongoose.Schema({
   title: {
@@ -76,8 +79,8 @@ var userSchema = mongoose.Schema({
   }
 });
 
-var Book = mongoose.model('Book', bookSchema);
-var User = mongoose.model('User', userSchema);
+var Book = mongoose.model('Book', bookSchema, 'book');
+var User = mongoose.model('User', userSchema, 'user');
 
 exports.book = Book;
 exports.user = User;
