@@ -23,8 +23,8 @@ html(ng-app='zenodotus')
         p.lead.notification We currently have #{books.length} books and counting.
 
     div.row
-      div(ng-controller='BookCtrl')
-        p.notification
+      div.span7.offset4(ng-controller='BookCtrl')
+        p
           - each book in books
             i.icon-book
             = " " + book.title
@@ -36,5 +36,7 @@ html(ng-app='zenodotus')
             - } else {
             = " Not currently available."
             - }
-            a.btn.btn-success.btn-mini.checkout(href='#') Check out
+            a.btn.btn-success.btn-mini.pull-right(href='#') Check out
+            br
+            br
 
