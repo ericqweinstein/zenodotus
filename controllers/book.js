@@ -17,16 +17,14 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
       $scope.books = books;
     });
   };
-}]);
 
-function BookCtrl($scope) {
   $scope.count = function() {
     var count = 0;
     angular.forEach($scope.books, function() {
       count++;
     });
-    var pluralization = count == 1 ? " book" : " books"
+    var pluralization = count == 1 ? " book" : " books";
     return count + pluralization;
   };
-}
+}]);
 
