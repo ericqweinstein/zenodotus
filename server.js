@@ -26,8 +26,12 @@ app.get('/', function(req, res) {
 });
 
 app.get('/books', function(req, res) {
-  var books = db.book.find();
-  res.render('books', { locals: { books: books } });
+  var books = db.book.find(function(err, books) {
+    if (err) { console.log('An error occurred.'); }
+    // Test
+    console.log('Found books: ' + books);
+  });
+  res.render('books', { books: books });
 });
 
 // Start the server listening on PORT (prod)
