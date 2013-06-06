@@ -1,11 +1,12 @@
 'use strict';
 
 var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/hs-library');
 
-var db = mongoose.createConnection('mongodb://localhost/hs-library');
+var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error:'));
 db.on('open', function() {
-  console.log('MongoDB is connected.');
+  console.log('MongoDB is connected to ' + db.name + '.');
 });
 
 var bookSchema = mongoose.Schema({
