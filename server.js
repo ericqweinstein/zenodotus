@@ -22,16 +22,10 @@ app.use(express.favicon('public/img/favicon.ico'));
 
 // Routes
 app.get('/', function(req, res) {
-  res.render('index');
-});
-
-app.get('/books', function(req, res) {
-  var books = db.book.find(function(err, books) {
+  db.book.find(function(err, books) {
     if (err) { console.log('An error occurred.'); }
-    // Test
-    console.log('Found books: ' + books);
+    res.render('index', { books: books });
   });
-  res.render('books', { books: books });
 });
 
 // Start the server listening on PORT (prod)

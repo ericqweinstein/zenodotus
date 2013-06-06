@@ -19,10 +19,10 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
   };
 
   $scope.count = function() {
-    var count = 0;
-    angular.forEach($scope.books, function() {
-      count++;
-    });
+     var count = 0;
+     angular.forEach($scope.books, function() {
+       count++;
+     });
     var pluralization = count == 1 ? " book" : " books";
     return count + pluralization;
   };

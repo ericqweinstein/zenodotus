@@ -23,7 +23,13 @@
   color: #fff;
   text-decoration: none;
 }
+
 li a:hover {
   text-decoration: none;
+}
+
+.checkout {
+  margin-left: 10px;
+  margin-top: -5px;
 }
 

@@ -18,10 +18,23 @@ html(ng-app='zenodotus')
       h1 Hacker School Library
       p.lead.indent Programming books and resources
 
+    div.row(ng-controller='BookCtrl')
+      div
+        p.lead.notification We currently have #{books.length} books and counting.
+
     div.row
       div(ng-controller='BookCtrl')
-        p.lead.notification We currently have {{count()}} and counting.
-
-        div.span7
-        a(href='/books').btn.btn-success.btn-large Check them out
+        p.notification
+          - each book in books
+            i.icon-book
+            = " " + book.title
+            i.icon-chevron-right  
+            = " " + "Quantity: " + book.quantity
+            i.icon-chevron-right
+            - if (book.quantity) {
+            = " Available!"
+            - } else {
+            = " Not currently available."
+            - }
+            a.btn.btn-success.btn-mini.checkout(href='#') Check out
 
