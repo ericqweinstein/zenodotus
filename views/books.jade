@@ -15,10 +15,10 @@ html(ng-app)
 
   div.hero-unit
     h1 Catalog
-    div.row
-      div(ng-controller='BookCtrl')
-        ul
-          li(ng-repeat='book in books')
-            i.icon-book
-            a(href='#') {{" " + book.title}}
+  div.row
+    div(ng-controller='BookCtrl')
+      ul
+        li(ng-repeat='book in books')
+          i.icon-book
+          a(href='#') {{" " + book.title}}
 
