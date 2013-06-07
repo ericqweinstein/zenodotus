@@ -30,9 +30,8 @@ html(ng-app='zenodotus')
         ul.books
           li(ng-repeat='book in books | filter: {available: true}')
             i.icon-book
-            a(href='#') {{ " " + book.title}}
-            i.icon-chevron-right  
-            {{"Quantity: " + book.quantity}}
+            a(href='#') {{ " " + book.title + " "}}
+            span ({{"Quantity: " + book.quantity}})
             a.btn.btn-success.btn-mini.pull-right(href='#') Check out
             br
             br
