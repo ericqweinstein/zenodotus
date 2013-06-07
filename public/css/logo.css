@@ -1,0 +1,140 @@
+.logo-container {
+  margin-top: -105px;
+  margin-right: 8px;
+}
+
+.monitor {
+  width: 50px;
+  height: 40px;
+  border: 5px solid black;
+}
+
+.screen {
+  width: 40px;
+  height: 30px;
+  background-color: black;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+.dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+}
+
+#one {
+  margin-top:5px;
+  background-color: #08BD4A;
+}
+
+#two {
+  margin-top: 5px;
+  margin-left: 10px;
+  background-color: #08BD4A;
+}
+
+#three {
+  margin-top: 5px;
+  margin-left: 20px;
+  background-color: #08BD4A;
+}
+
+#four {
+  margin-top: 15px;
+  margin-left: 5px;
+  background-color: #08BD4A;
+}
+
+#five {
+  margin-top: 15px;
+  margin-left: 10px;
+  background-color: #08BD4A;
+}
+
+#six {
+  margin-top: 15px;
+  margin-left: 20px;
+  background-color: #08BD4A;
+}
+
+#seven {
+  margin-top: 15px;
+  margin-left: 25px;
+  background-color: #08BD4A;
+}
+
+.machine {
+  height: 5px;
+  width: 20px;
+  background-color: black;
+  margin-left: 20px;
+}
+
+.keyboard {
+  height: 10px;
+  width: 50px;
+  border: 5px solid black;
+  background-color: black;
+}
+
+#eight {
+  background-color: #EEE;
+  margin-left: -5px;
+  margin-top: -5px;
+}
+
+#nine {
+  background-color: #EEE;
+  margin-left: 50px;
+  margin-top: -5px;
+}
+
+#ten {
+  background-color: white;
+  margin-left: 10px;
+}
+
+#eleven {
+  background-color: white;
+  margin-left: 20px;
+}
+
+#twelve {
+  background-color: white;
+  margin-left: 30px;
+}
+
+#thirteen {
+  background-color: white;
+  margin-left: 40px;
+}
+
+#fourteen {
+  background-color: white;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+#fifteen {
+  background-color: white;
+  margin-top: 5px;
+  margin-left: 15px;
+}
+
+#sixteen {
+  background-color: white;
+  margin-top: 5px;
+  margin-left: 25px;
+}
+
+#seventeen {
+  background-color: white;
+  margin-top: 5px;
+  margin-left: 35px;
+}
+
+.hs-logo {
+  font-family: sans-serif;
+}
+
