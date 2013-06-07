@@ -7,6 +7,15 @@ zenodotus.factory('User', ['$resource', function($resource) {
 }]);
 
 zenodotus.controller('UserCtrl', ['$scope', 'User', function($scope, User) {
-  // Controller magicks TK
+  $scope.users = User.query();
+
+  $scope.search = function(query) {
+    // !!! Unsafe !!!
+    query = JSON.stringify(query);
+
+    User.query({query: query}, function(users) {
+      $scope.users = users;
+    });
+  };
 }]);
 

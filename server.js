@@ -36,6 +36,14 @@ app.get('/books', function(req, res) {
   });
 });
 
+// JSON endpoint for users
+app.get('/users', function(req, res) {
+  db.user.find(function(err, users) {
+    if (err) { console.log('An error occurred.') }
+    res.send(users);
+  });
+});
+
 // Start the server listening on PORT
 // (prod) or localhost:8888 (dev/testing)
 http.createServer(app).listen(app.get('port'), function() {
