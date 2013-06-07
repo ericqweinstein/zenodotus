@@ -1,12 +1,14 @@
 'use strict';
 
-// Pull in the modules we'll need.
+/* Modules */
+
 var express = require('express')
   , http    = require('http')
   , routes  = require('./routes')
   , db      = require('./models/schema');
 
-// Set up the server.
+/* Configure server */
+
 var app = express();
 
 app.set('port', process.env.PORT || 8888);
@@ -16,20 +18,26 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static('public'));
-// Check controllers/ for Angular controller JS.
 app.use(express.static('controllers'));
 app.use(express.favicon('public/img/favicon.ico'));
 
-// Routes
+/* Routes */
+
+// Render the only page (SPA FTW)
 app.get('/', function(req, res) {
+  res.render('index');
+});
+
+// JSON endpoint for books
+app.get('/books', function(req, res) {
   db.book.find(function(err, books) {
     if (err) { console.log('An error occurred.'); }
-    res.render('index', { books: books });
+    res.send(books);
   });
 });
 
-// Start the server listening on PORT (prod)
-// or localhost:8888 (dev/testing).
+// Start the server listening on PORT
+// (prod) or localhost:8888 (dev/testing)
 http.createServer(app).listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port') + '...');
 });

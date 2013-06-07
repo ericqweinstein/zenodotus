@@ -20,22 +20,16 @@ html(ng-app='zenodotus')
 
     div.row(ng-controller='BookCtrl')
       div
-        p.lead.notification We currently have #{books.length} books and counting.
+        p.lead.notification We currently have {{count()}} and counting.
 
     div.row
       div.span7.offset4(ng-controller='BookCtrl')
-        p
-          - each book in books
+        ul.books
+          li(ng-repeat='book in books | filter: {available: true}')
             i.icon-book
-            = " " + book.title + " "
+            a(href='#') {{ " " + book.title}}
             i.icon-chevron-right  
-            = " " + "Quantity: " + book.quantity
-            i.icon-chevron-right
-            - if (book.quantity) {
-            = " Available!"
-            - } else {
-            = " Not currently available."
-            - }
+            {{"Quantity: " + book.quantity}}
             a.btn.btn-success.btn-mini.pull-right(href='#') Check out
             br
             br

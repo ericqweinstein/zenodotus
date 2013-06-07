@@ -28,3 +28,7 @@ li a:hover {
   text-decoration: none;
 }
 
+.books {
+  list-style-type: none;
+}
+
