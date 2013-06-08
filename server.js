@@ -28,6 +28,11 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
+// Get login route working for now
+app.get('/login', function(req, res) {
+  res.render('index');
+});
+
 // JSON endpoint for books
 app.get('/books', function(req, res) {
   db.book.find(function(err, books) {
