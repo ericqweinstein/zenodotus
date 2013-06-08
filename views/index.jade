@@ -14,6 +14,7 @@ html(ng-app='zenodotus')
 
   body
     include _header
+    include _modal
 
     div.hero-unit
       h1 Hacker School Library
@@ -25,14 +26,9 @@ html(ng-app='zenodotus')
       div
         p.lead.notification We currently have {{count()}} and counting.
 
-    div.row
-      div.span7.offset4(ng-controller='BookCtrl')
-        ul.books
-          li(ng-repeat='book in books | filter: {available: true}')
-            i.icon-book
-            a(href='#') {{ " " + book.title + " "}}
-            span ({{"Quantity: " + book.quantity}})
-            a.btn.btn-success.btn-mini.pull-right(href='#') Check out
-            br
-            br
+    - if (cookieValid) {
+        include _books
+    - } else {
+        a(href='/#modal', role='button', data-toggle='modal').btn.btn-success.span1.offset7 Log in
+    - }
 

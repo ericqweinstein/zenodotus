@@ -16,7 +16,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser());
+app.use(express.cookieParser('test secret'));
 app.use(app.router);
 app.use(express.static('public'));
 app.use(express.static('controllers'));
@@ -31,17 +31,17 @@ app.get('/', function(req, res) {
 
 // Get login route working for now
 app.get('/login', function(req, res) {
-  // Cookie test working
-  res.cookie('test', '1', { maxAge: 36000000, httpOnly: true });
+  // Signed cookie test working
+  res.cookie('test', '1', { maxAge: 36000000, signed: true });
 
-  res.render('index');
+  res.render('index', {cookieValid: req.signedCookies.test === '1'});
 });
 
 // JSON endpoint for books
 app.get('/books', function(req, res) {
   db.book.find(function(err, books) {
     if (err) { console.log('An error occurred.'); }
-    res.send(books);
+    res.json(books);
   });
 });
 
@@ -49,7 +49,7 @@ app.get('/books', function(req, res) {
 app.get('/users', function(req, res) {
   db.user.find(function(err, users) {
     if (err) { console.log('An error occurred.'); }
-    res.send(users);
+    res.json(users);
   });
 });
 

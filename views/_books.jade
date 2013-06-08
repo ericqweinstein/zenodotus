@@ -1,0 +1,11 @@
+div.row
+  div.span7.offset4(ng-controller='BookCtrl')
+    ul.books
+      li(ng-repeat='book in books | filter: {available: true}')
+        i.icon-book
+        a(href='#') {{ " " + book.title + " "}}
+        span ({{"Quantity: " + book.quantity}})
+        a.btn.btn-success.btn-mini.pull-right(href='#') Check out
+        br
+        br
+
