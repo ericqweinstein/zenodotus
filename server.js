@@ -37,6 +37,12 @@ app.get('/login', function(req, res) {
   res.render('index', {cookieValid: req.signedCookies.test === '1'});
 });
 
+// What logs in must log out
+app.get('/logout', function(req, res) {
+  req.session = null;
+  res.render('index');
+});
+
 // JSON endpoint for books
 app.get('/books', function(req, res) {
   db.book.find(function(err, books) {
