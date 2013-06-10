@@ -22,23 +22,6 @@ app.use(express.static('public'));
 app.use(express.static('controllers'));
 app.use(express.favicon('public/img/favicon.ico'));
 
-app.locals.error = null;
-
-/* !!! Test authorization !!! 
- *
- * Note: this currently breaks the 'We have
- * X books and counting' bit, since that
- * will get a 401 until the user logs in.
- */
-
-function checkAuthorization(req, res, next) {
-  if (req.signedCookies.test !== '1') {
-    res.send('401', 'Unauthorized');
-  } else {
-    next();
-  }
-}
-
 /* Routes */
 
 app.get('/', function(req, res) {
@@ -51,16 +34,6 @@ app.get('/signup', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-  // Username will always be student's e-mail.
-  var userName = req.body.email;
-  var password = req.body.password;
-
-  if (!userName || !password) {
-    return res.render('_modal', {
-      error: 'All fields are required.'
-    });
-  }
-
   res.cookie('test', '1', { maxAge: 36000000, signed: true });
   res.render('index', {cookieValid: req.signedCookies.test === '1'});
 });
@@ -71,7 +44,7 @@ app.get('/logout', function(req, res) {
 });
 
 // JSON endpoint for books
-app.get('/books', checkAuthorization, function(req, res) {
+app.get('/books', function(req, res) {
   db.book.find(function(err, books) {
     if (err) { console.log('An error occurred.'); }
     res.json(books);

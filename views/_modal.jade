@@ -3,15 +3,14 @@ div.modal.hide.fade#modal(tabindex='-1', role='dialog', aria-labelledby='modalLa
   div.modal-header
     button.close(type='button', data-dismiss='modal', aria-hidden='true') x
     h3#modalLabel Log In
-  div.modal-body
-    - if (error)
-      p= error
-    form(method='post', action='/login', id='loginForm')
+  div.modal-body(ng-controller='UserCtrl')
+    form.css-form(name='form', method='post', action='/login', id='loginForm')
       p E-mail:
-      input(type='text', name='email')
+      input(type='text', name='email', ng-model='user.name', valid, required) {{user.name}}
       br
+      span(ng-show='form.user.$error.name') Invalid username. (Your username should be your Hacker School e-mail address.)
       p Password:
-      input(type='password', name='password')
+      input(type='password', name='password', ng-model='user.password', required)
       br
       br
       button(type ='submit').btn.btn-success Log in
