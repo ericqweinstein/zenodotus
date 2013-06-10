@@ -39,6 +39,8 @@ app.post('/signup', function(req, res) {
                             , admin: false
                             , books: [] });
 
+  // TODO: Check if email is already in the DB
+  // & tell user to log in rather than sign up
   newUser.save(function(err) {
     if (err) console.log(err.message);
     res.render('500', { message: err.message });
@@ -53,7 +55,6 @@ app.post('/login', function(req, res) {
     , userPassword = req.body.password;
 
   // Check if user exists
-  // TODO: Ensure email is unique when signing up, above
   db.user.findOne({ email: userEmail }, function(err, user) {
     if (err) console.log(err);
 
@@ -65,6 +66,7 @@ app.post('/login', function(req, res) {
         res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
         res.redirect('/');
       } else {
+        // TODO: Show the user a 'wrong password' message
         // Redirect without setting the cookie for now
         res.redirect('/');
       }
@@ -80,7 +82,7 @@ app.get('/logout', function(req, res) {
 // JSON endpoint for books
 app.get('/books', function(req, res) {
   db.book.find(function(err, books) {
-    if (err) { console.log('An error occurred: ' + err); }
+    if (err) { console.log('An error occurred: ' + err.message); }
     res.json(books);
   });
 });
@@ -88,7 +90,7 @@ app.get('/books', function(req, res) {
 // JSON endpoint for users (TEMPORARY)
 app.get('/users', function(req, res) {
   db.user.find(function(err, users) {
-    if (err) { console.log('An error occurred: ' + err); }
+    if (err) { console.log('An error occurred: ' + err.message); }
     res.json(users);
   });
 });
