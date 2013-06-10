@@ -25,7 +25,7 @@ app.use(express.favicon('public/img/favicon.ico'));
 /* Routes */
 
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('index', {cookieValid: req.signedCookies.test === '1'});
 });
 
 app.get('/signup', function(req, res) {
@@ -35,7 +35,7 @@ app.get('/signup', function(req, res) {
 
 app.post('/login', function(req, res) {
   res.cookie('test', '1', { maxAge: 36000000, signed: true });
-  res.render('index', {cookieValid: req.signedCookies.test === '1'});
+  res.redirect('/');
 });
 
 app.get('/logout', function(req, res) {
