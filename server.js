@@ -41,6 +41,7 @@ app.post('/signup', function(req, res) {
 
   newUser.save(function(err) {
     if (err) console.log(err.message);
+    res.render('500', { message: err.message });
   });
   
   res.cookie('test', '1', { maxAge: 36000000, signed: true });
@@ -94,7 +95,7 @@ app.get('/users', function(req, res) {
 
 // Handle errors
 app.use(function(req, res) {
-  res.render('404');
+  res.render('404', {message: 'Sorry, that page doesn\'t exist.'});
 });
 
 /* Start the server */
