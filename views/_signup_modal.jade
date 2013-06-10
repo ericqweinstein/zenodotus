@@ -5,6 +5,14 @@ div.modal.hide.fade#signupModal(tabindex='-1', role='dialog', aria-labelledby='s
     h3#signupModalLabel Sign Up
   div.modal-body(ng-controller='UserCtrl')
     form.css-form(name='signupForm', method='post', action='/signup', id='signupForm')
+      p First name:
+      input(type='text', name='fname', placeholder='Oxnard', ng-model='fname', required)
+      br
+      span.text-error(ng-show='signupForm.fname.$error.fname') Please provide your first name.
+      p Last name:
+      input(type='text', name='lname', placeholder='Montalvo', ng-model='lname', required)
+      br
+      span.text-error(ng-show='signupForm.lname.$error.lname') Please provide your last name.
       p E-mail:
       input(type='email', name='email', placeholder='me@mydomain.com', ng-model='email', required)
       br

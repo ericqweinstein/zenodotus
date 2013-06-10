@@ -29,7 +29,22 @@ app.get('/', function(req, res) {
 });
 
 app.post('/signup', function(req, res) {
-  // Redirect to index until we finish the sign-up process
+  var userName = req.body.fname.trim() + ' ' + req.body.lname.trim()
+    , email    = req.body.email
+    , password = req.body.password;
+
+  var newUser = new db.user({ name: userName
+                            , email: email
+                            , password: password
+                            , admin: false
+                            , books: [] });
+
+  newUser.save(function(err) {
+    if (err) console.log(err.message);
+  });
+  console.log('Successfully saved user.');
+  
+  res.cookie('test', '1', { maxAge: 36000000, signed: true });
   res.redirect('/');
 });
 
