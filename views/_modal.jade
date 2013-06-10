@@ -4,13 +4,14 @@ div.modal.hide.fade#modal(tabindex='-1', role='dialog', aria-labelledby='modalLa
     button.close(type='button', data-dismiss='modal', aria-hidden='true') x
     h3#modalLabel Log In
   div.modal-body
-    form
+    form(method='post', action='/login', id='loginForm')
       p E-mail:
-      input(type='text', name='name')
+      input(type='text', name='email')
       br
       p Password:
       input(type='password', name='password')
-  div.modal-footer
-    button.btn(data-dismiss='modal', aria-hidden='true') Close
-    a(href='/login').btn.btn-success Log In
+      br
+      br
+      button(type ='submit').btn.btn-success Log in
+      button.btn.pull-right(data-dismiss='modal', aria-hidden='true') Close
 

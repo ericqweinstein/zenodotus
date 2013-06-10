@@ -24,20 +24,18 @@ app.use(express.favicon('public/img/favicon.ico'));
 
 /* Routes */
 
-// Render the only page (SPA FTW)
 app.get('/', function(req, res) {
   res.render('index');
 });
 
-// Get login route working for now
-app.get('/login', function(req, res) {
-  // Signed cookie test working
-  res.cookie('test', '1', { maxAge: 36000000, signed: true });
+app.post('/login', function(req, res) {
+  // Test that form data got through
+  console.log('Got user: ' + req.body.email + ' with password: ' + req.body.password + '.');
 
+  res.cookie('test', '1', { maxAge: 36000000, signed: true });
   res.render('index', {cookieValid: req.signedCookies.test === '1'});
 });
 
-// What logs in must log out
 app.get('/logout', function(req, res) {
   req.session = null;
   res.render('index');
@@ -59,8 +57,13 @@ app.get('/users', function(req, res) {
   });
 });
 
-// Start the server listening on PORT
-// (prod) or localhost:8888 (dev/testing)
+// Handle errors
+app.use(function(req, res) {
+  res.render('404');
+});
+
+/* Start the server */
+
 http.createServer(app).listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port') + '...');
 });
