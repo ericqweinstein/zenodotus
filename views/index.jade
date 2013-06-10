@@ -15,7 +15,8 @@ html(ng-app='zenodotus')
 
   body
     include _header
-    include _modal
+    include _login_modal
+    include _signup_modal
 
     div.hero-unit
       h1 Hacker School Library
@@ -30,6 +31,6 @@ html(ng-app='zenodotus')
     - if (cookieValid) {
         include _books
     - } else {
-        a(href='/#modal', role='button', data-toggle='modal').btn.btn-success.btn-large.span3.offset6 Check them out!
+        a(href='/#loginModal', role='button', data-toggle='modal').btn.btn-success.btn-large.span3.offset6 Check them out!
     - }
 

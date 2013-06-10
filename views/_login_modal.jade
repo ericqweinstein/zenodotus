@@ -1,8 +1,8 @@
 // Login modal
-div.modal.hide.fade#modal(tabindex='-1', role='dialog', aria-labelledby='modalLabel', aria-hidden='true')
+div.modal.hide.fade#loginModal(tabindex='-1', role='dialog', aria-labelledby='loginModalLabel', aria-hidden='true')
   div.modal-header
     button.close(type='button', data-dismiss='modal', aria-hidden='true') x
-    h3#modalLabel Log In
+    h3#loginModalLabel Log In
   div.modal-body(ng-controller='UserCtrl')
     form.css-form(name='loginForm', method='post', action='/login', id='loginForm')
       p E-mail:

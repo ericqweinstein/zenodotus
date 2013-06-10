@@ -1,0 +1,19 @@
+// Signup modal
+div.modal.hide.fade#signupModal(tabindex='-1', role='dialog', aria-labelledby='signupModalLabel', aria-hidden='true')
+  div.modal-header
+    button.close(type='button', data-dismiss='modal', aria-hidden='true') x
+    h3#signupModalLabel Sign Up
+  div.modal-body(ng-controller='UserCtrl')
+    form.css-form(name='signupForm', method='post', action='/signup', id='signupForm')
+      p E-mail:
+      input(type='email', name='email', placeholder='me@mydomain.com', ng-model='email', required)
+      br
+      span.text-error(ng-show='signupForm.email.$error.email') Invalid e-mail address. (Please use your Hacker School e-mail address.)
+      p Password:
+      input(type='password', name='password', placeholder='Password', ng-model='password', ng-password-valid, required)
+      br
+      span.text-error(ng-show='signupForm.password.$error.pwd') Your password must be at least eight characters long.
+      br
+      button(type ='submit').btn.btn-success Sign up
+      button.btn.pull-right(data-dismiss='modal', aria-hidden='true') Close
+

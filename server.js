@@ -28,9 +28,9 @@ app.get('/', function(req, res) {
   res.render('index', {cookieValid: req.signedCookies.test === '1'});
 });
 
-app.get('/signup', function(req, res) {
-  // Render index until we make the sign up page
-  res.render('index');
+app.post('/signup', function(req, res) {
+  // Redirect to index until we finish the sign-up process
+  res.redirect('/');
 });
 
 app.post('/login', function(req, res) {
