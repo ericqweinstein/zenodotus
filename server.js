@@ -39,15 +39,23 @@ app.post('/login', function(req, res) {
 });
 
 app.get('/logout', function(req, res) {
-  req.session = null;
-  res.render('index');
+  res.clearCookie('test');
+  res.redirect('/');
 });
 
 // JSON endpoint for books
 app.get('/books', function(req, res) {
   db.book.find(function(err, books) {
-    if (err) { console.log('An error occurred.'); }
+    if (err) { console.log('An error occurred: ' + err); }
     res.json(books);
+  });
+});
+
+// JSON endpoint for users (TEMPORARY)
+app.get('/users', function(req, res) {
+  db.user.find(function(err, users) {
+    if (err) { console.log('An error occurred: ' + err); }
+    res.json(users);
   });
 });
 

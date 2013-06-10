@@ -5,7 +5,17 @@ zenodotus.factory('User', ['$resource', function($resource) {
 }]);
 
 zenodotus.controller('UserCtrl', ['$scope', 'User', function($scope, User) {
-  // TK
+  // Put this back for now
+  $scope.users = User.query();
+
+  $scope.search = function(query) {
+    // !!! Unsafe !!!
+    query = JSON.stringify(query);
+
+    User.query({query: query}, function(users) {
+      $scope.users = users;
+    });
+  };
 }]);
 
 zenodotus.directive('ngPasswordValid', function() {
@@ -14,7 +24,7 @@ zenodotus.directive('ngPasswordValid', function() {
     link: function(scope, elm, attrs, ctrl) {
       ctrl.$parsers.unshift(function(viewValue) {
         if (viewValue.length >= 8) {
-          // If the username is valid...
+          // If the password is valid...
           ctrl.$setValidity('pwd', true);
           return viewValue;
         } else {
