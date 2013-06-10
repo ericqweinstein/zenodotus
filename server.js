@@ -25,7 +25,7 @@ app.use(express.favicon('public/img/favicon.ico'));
 /* Routes */
 
 app.get('/', function(req, res) {
-  res.render('index', {cookieValid: req.signedCookies.rememberToken === '1'});
+  res.render('index', { cookieValid: req.signedCookies.rememberToken === '1' });
 });
 
 app.post('/signup', function(req, res) {
@@ -66,9 +66,7 @@ app.post('/login', function(req, res) {
         res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
         res.redirect('/');
       } else {
-        // TODO: Show the user a 'wrong password' message
-        // Redirect without setting the cookie for now
-        res.redirect('/');
+        res.send('Incorrect password.');
       }
     });
   });
@@ -97,7 +95,7 @@ app.get('/users', function(req, res) {
 
 // Handle errors
 app.use(function(req, res) {
-  res.render('404', {message: 'Sorry, that page doesn\'t exist.'});
+  res.render('404', { message: 'Sorry, that page doesn\'t exist.' });
 });
 
 /* Start the server */

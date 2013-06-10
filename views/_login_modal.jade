@@ -11,6 +11,9 @@ div.modal.hide.fade#loginModal(tabindex='-1', role='dialog', aria-labelledby='lo
       span.text-error(ng-show='loginForm.email.$error.email') Invalid e-mail address. (Please use your Hacker School e-mail address.)
       p Password:
       input(type='password', name='password', placeholder='Password', ng-model='password', required)
+      - if (locals.messages) {
+        p.text-error=locals.messages
+      - }
       br
       br
       button(type ='submit').btn.btn-success Log in
