@@ -25,7 +25,7 @@ app.use(express.favicon('public/img/favicon.ico'));
 /* Routes */
 
 app.get('/', function(req, res) {
-  res.render('index', {cookieValid: req.signedCookies.test === '1'});
+  res.render('index', {cookieValid: req.signedCookies.rememberToken === '1'});
 });
 
 app.post('/signup', function(req, res) {
@@ -44,7 +44,7 @@ app.post('/signup', function(req, res) {
     res.render('500', { message: err.message });
   });
   
-  res.cookie('test', '1', { maxAge: 36000000, signed: true });
+  res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
   res.redirect('/');
 });
 
@@ -62,7 +62,7 @@ app.post('/login', function(req, res) {
       if (err) console.log(err);
 
       if (isMatch) {
-        res.cookie('test', '1', { maxAge: 36000000, signed: true });
+        res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
         res.redirect('/');
       } else {
         // Redirect without setting the cookie for now
@@ -73,7 +73,7 @@ app.post('/login', function(req, res) {
 });
 
 app.get('/logout', function(req, res) {
-  res.clearCookie('test');
+  res.clearCookie('rememberToken');
   res.redirect('/');
 });
 
