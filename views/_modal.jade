@@ -4,6 +4,8 @@ div.modal.hide.fade#modal(tabindex='-1', role='dialog', aria-labelledby='modalLa
     button.close(type='button', data-dismiss='modal', aria-hidden='true') x
     h3#modalLabel Log In
   div.modal-body
+    - if (error)
+      p= error
     form(method='post', action='/login', id='loginForm')
       p E-mail:
       input(type='text', name='email')

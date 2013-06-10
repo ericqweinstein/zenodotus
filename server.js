@@ -22,6 +22,8 @@ app.use(express.static('public'));
 app.use(express.static('controllers'));
 app.use(express.favicon('public/img/favicon.ico'));
 
+app.locals.error = null;
+
 /* !!! Test authorization !!! 
  *
  * Note: this currently breaks the 'We have
@@ -49,8 +51,15 @@ app.get('/signup', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-  // Test that form data got through
-  console.log('Got user: ' + req.body.email + ' with password: ' + req.body.password + '.');
+  // Username will always be student's e-mail.
+  var userName = req.body.email;
+  var password = req.body.password;
+
+  if (!userName || !password) {
+    return res.render('_modal', {
+      error: 'All fields are required.'
+    });
+  }
 
   res.cookie('test', '1', { maxAge: 36000000, signed: true });
   res.render('index', {cookieValid: req.signedCookies.test === '1'});
