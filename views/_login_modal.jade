@@ -6,14 +6,12 @@ div.modal.hide.fade#loginModal(tabindex='-1', role='dialog', aria-labelledby='lo
   div.modal-body(ng-controller='UserCtrl')
     form.css-form(name='loginForm', method='post', action='/login', id='loginForm')
       p E-mail:
-      input(type='email', name='email', placeholder='me@mydomain.com', ng-model='email', ng-user-exists, required)
+      input(type='email', name='email', placeholder='me@mydomain.com', ng-model='email', required)
       br
       span.text-error(ng-show='loginForm.email.$error.email') Invalid e-mail address. (Please use your Hacker School e-mail address.)
-      span.text-error(ng-show='loginForm.email.$error.knownUser') Unrecognized e-mail address. (Please sign up!)
       p Password:
-      input(type='password', name='password', placeholder='Password', ng-model='password', ng-password-valid, required)
+      input(type='password', name='password', placeholder='Password', ng-model='password', required)
       br
-      span.text-error(ng-show='loginForm.password.$error.pwd') Your password must be at least eight characters long.
       br
       button(type ='submit').btn.btn-success Log in
       button.btn.pull-right(data-dismiss='modal', aria-hidden='true') Close

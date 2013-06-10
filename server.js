@@ -42,15 +42,33 @@ app.post('/signup', function(req, res) {
   newUser.save(function(err) {
     if (err) console.log(err.message);
   });
-  console.log('Successfully saved user.');
   
   res.cookie('test', '1', { maxAge: 36000000, signed: true });
   res.redirect('/');
 });
 
 app.post('/login', function(req, res) {
-  res.cookie('test', '1', { maxAge: 36000000, signed: true });
-  res.redirect('/');
+  var userEmail    = req.body.email
+    , userPassword = req.body.password;
+
+  // Check if user exists
+  // TODO: Ensure email is unique when signing up, above
+  db.user.findOne({ email: userEmail }, function(err, user) {
+    if (err) console.log(err);
+
+    // Check hashed password against password in the database
+    user.comparePassword(userPassword, function(err, isMatch) {
+      if (err) console.log(err);
+
+      if (isMatch) {
+        res.cookie('test', '1', { maxAge: 36000000, signed: true });
+        res.redirect('/');
+      } else {
+        // Redirect without setting the cookie for now
+        res.redirect('/');
+      }
+    });
+  });
 });
 
 app.get('/logout', function(req, res) {
@@ -82,6 +100,6 @@ app.use(function(req, res) {
 /* Start the server */
 
 http.createServer(app).listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + app.get('port') + '...');
+  console.log('Express server listening on port ' + app.get('port') + '.');
 });
 

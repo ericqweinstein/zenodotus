@@ -37,21 +37,3 @@ zenodotus.directive('ngPasswordValid', function() {
   };
 });
 
-zenodotus.directive('ngUserExists', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, elm, attrs, ctrl) {
-      ctrl.$parsers.unshift(function(emailAddress) {
-        // Test with hard-coded value
-        if (emailAddress === 'eric.q.weinstein@gmail.com') {
-          ctrl.$setValidity('knownUser', true);
-          return emailAddress;
-        } else {
-          ctrl.$setValidity('knownUser', false);
-          return undefined;
-        }
-      });
-    }
-  };
-});
-
