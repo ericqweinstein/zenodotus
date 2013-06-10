@@ -22,9 +22,29 @@ app.use(express.static('public'));
 app.use(express.static('controllers'));
 app.use(express.favicon('public/img/favicon.ico'));
 
+/* !!! Test authorization !!! 
+ *
+ * Note: this currently breaks the 'We have
+ * X books and counting' bit, since that
+ * will get a 401 until the user logs in.
+ */
+
+function checkAuthorization(req, res, next) {
+  if (req.signedCookies.test !== '1') {
+    res.send('401', 'Unauthorized');
+  } else {
+    next();
+  }
+}
+
 /* Routes */
 
 app.get('/', function(req, res) {
+  res.render('index');
+});
+
+app.get('/signup', function(req, res) {
+  // Render index until we make the sign up page
   res.render('index');
 });
 
@@ -42,18 +62,10 @@ app.get('/logout', function(req, res) {
 });
 
 // JSON endpoint for books
-app.get('/books', function(req, res) {
+app.get('/books', checkAuthorization, function(req, res) {
   db.book.find(function(err, books) {
     if (err) { console.log('An error occurred.'); }
     res.json(books);
-  });
-});
-
-// JSON endpoint for users
-app.get('/users', function(req, res) {
-  db.user.find(function(err, users) {
-    if (err) { console.log('An error occurred.'); }
-    res.json(users);
   });
 });
 
