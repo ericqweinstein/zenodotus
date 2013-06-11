@@ -51,12 +51,14 @@ app.post('/signup', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-  var userEmail    = req.body.email
-    , userPassword = req.body.password;
+  var userEmail     = req.body.email
+    , userPassword  = req.body.password
+    , passwordError = 'Incorrect username/password combination.';
 
   // Check if user exists
   db.user.findOne({ email: userEmail }, function(err, user) {
     if (err) console.log(err);
+    if (!user) res.send(passwordError);
 
     // Check hashed password against password in the database
     user.comparePassword(userPassword, function(err, isMatch) {
@@ -66,7 +68,6 @@ app.post('/login', function(req, res) {
         res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
         res.redirect('/');
       } else {
-        var passwordError = 'Incorrect username/password combination.';
         res.send(passwordError);
       }
     });
