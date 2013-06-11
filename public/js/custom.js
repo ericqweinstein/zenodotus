@@ -22,8 +22,14 @@ $(function() {
     });
 
     // Callback handler called on success
+    // 
+    // This may actually be the worst thing I have ever done
     request.done(function(response, textStatus, jqXHR) {
-      $('#password-error').html(response);
+      if (response === 'Incorrect username/password combination.') {
+        $('#password-error').html(response);
+      } else {
+        window.location.replace('/');
+      }
     });
 
     // Callback handler called on failure
