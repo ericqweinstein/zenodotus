@@ -1,0 +1,10 @@
+h2.notification Add a book
+
+div.add-books(ng-controller='BookCtrl')
+  form.css-form.form-inline.span10.offset3#addBookForm(name='addBookForm', method='post', action='/books')
+    input.indent(type='text', name='title', placeholder='Title', ng-model='title', required)
+    input.indent(type='text', name='isbn', placeholder='ISBN', ng-model='isbn', required)
+    input.indent(type='text', name='quantity', placeholder='Quantity', ng-model='quantity', required)
+
+    button.btn.btn-success.btn-small.indent(type='submit') Add
+

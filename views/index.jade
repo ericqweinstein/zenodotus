@@ -35,3 +35,9 @@ html(ng-app='zenodotus')
         a(href='/#loginModal', role='button', data-toggle='modal').btn.btn-success.btn-large.span3.offset6 Check them out!
     - }
 
+  - if (isAdmin) {
+      include _book_form
+  - }
+
+  include _footer
+

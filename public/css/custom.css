@@ -1,3 +1,5 @@
+/* General */
+
 .notification {
   text-align: center;
 }
@@ -5,6 +7,12 @@
 .indent {
   margin-left: 3px;
 }
+
+li a:hover {
+  text-decoration: none;
+}
+
+/* Header */
 
 .logo {
   float: left;
@@ -32,11 +40,27 @@
   margin-right: -118px;
 }
 
-li a:hover {
-  text-decoration: none;
-}
+/* Main */
 
 .books {
   list-style-type: none;
+}
+
+/* Admin */
+
+.add-books {
+  padding-bottom: 120px;
+}
+
+/* Footer */
+
+footer {
+  position: fixed;
+}
+
+.node-logo {
+  width: 12%;
+  height: 12%;
+  margin-left: -110px;
 }
 

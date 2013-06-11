@@ -17,6 +17,7 @@ app.set('view engine', 'jade');
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('test secret'));
+app.use(express.session({}));
 app.use(app.router);
 app.use(express.static('public'));
 app.use(express.static('controllers'));
@@ -25,7 +26,8 @@ app.use(express.favicon('public/img/favicon.ico'));
 /* Routes */
 
 app.get('/', function(req, res) {
-  res.render('index', { cookieValid: req.signedCookies.rememberToken === '1' });
+  res.render('index', { cookieValid: req.signedCookies.rememberToken === '1'
+                      , isAdmin: req.session.isAdmin });
 });
 
 app.post('/signup', function(req, res) {
@@ -42,12 +44,14 @@ app.post('/signup', function(req, res) {
   // TODO: Check if email is already in the DB
   // & tell user to log in rather than sign up
   newUser.save(function(err) {
-    if (err) console.log(err.message);
-    res.render('500', { message: err.message });
+    if (err) {
+      console.log(err.message);
+      res.render('500', { message: err.message });
+    }
   });
   
   res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-  res.redirect('/');
+  res.render('index');
 });
 
 app.post('/login', function(req, res) {
@@ -57,7 +61,10 @@ app.post('/login', function(req, res) {
 
   // Check if user exists
   db.user.findOne({ email: userEmail }, function(err, user) {
-    if (err) console.log(err);
+    if (err) {
+      console.log(err.message);
+      res.render('500', { message: err.message });
+    }
     if (!user) res.send(passwordError);
 
     // Check hashed password against password in the database
@@ -66,7 +73,9 @@ app.post('/login', function(req, res) {
 
       if (isMatch) {
         res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-        res.redirect('/');
+        req.session.isAdmin = user.admin
+
+        res.render('index');
       } else {
         res.send(passwordError);
       }
@@ -76,7 +85,8 @@ app.post('/login', function(req, res) {
 
 app.get('/logout', function(req, res) {
   res.clearCookie('rememberToken');
-  res.redirect('/');
+  req.session.destroy();
+  res.render('index');
 });
 
 // JSON endpoint for books
@@ -85,6 +95,28 @@ app.get('/books', function(req, res) {
     if (err) { console.log('An error occurred: ' + err.message); }
     res.json(books);
   });
+});
+
+app.post('/books', function(req, res) {
+  var bookTitle = req.body.title.trim()
+    , bookIsbn  = +req.body.isbn.trim()
+    , bookQty   = +req.body.quantity.trim();
+
+  var newBook = new db.book({ title: bookTitle
+                            , isbn: bookIsbn
+                            , quantity: bookQty
+                            , available: true });
+
+  // TODO: Check if book is already in the DB
+  // & tell user to ++ qty rather than add new
+  newBook.save(function(err) {
+    if (err) {
+      console.log(err.message);
+      res.render('500', { message: err.message });
+    }
+  });
+  
+  res.render('index');
 });
 
 // JSON endpoint for users (TEMPORARY)
