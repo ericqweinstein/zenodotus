@@ -66,7 +66,8 @@ app.post('/login', function(req, res) {
         res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
         res.redirect('/');
       } else {
-        res.send('Incorrect password.');
+        var passwordError = 'Incorrect username/password combination.';
+        res.send(passwordError);
       }
     });
   });
@@ -103,5 +104,4 @@ app.use(function(req, res) {
 http.createServer(app).listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port') + '.');
 });
-
 
