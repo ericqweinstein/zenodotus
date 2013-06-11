@@ -22,11 +22,11 @@ zenodotus.directive('ngPasswordValid', function() {
   return {
     require: 'ngModel',
     link: function(scope, elm, attrs, ctrl) {
-      ctrl.$parsers.unshift(function(viewValue) {
-        if (viewValue.length >= 8) {
+      ctrl.$parsers.unshift(function(possiblePassword) {
+        if (possiblePassword.length >= 8) {
           // If the password is valid...
           ctrl.$setValidity('pwd', true);
-          return viewValue;
+          return possiblePassword;
         } else {
           // ...otherwise, return undefined (no model update)
           ctrl.$setValidity('pwd', false);
