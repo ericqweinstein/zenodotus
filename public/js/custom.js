@@ -1,50 +1,44 @@
+'use strict';
+
 /*
  * AJAX request for handling error
  * messages displayed inside modals.
  */
 
-'use strict';
+$(function() {
+  // Bind to the submit event on the login form
+  $('body').on('submit', '#loginForm', function(e) {
+    // Store the form
+    var $form = $(this);
 
-// Variable to hold our request
-var request;
-// Bind to the submit event on the login form
-$('#loginForm').submit(function(event) {
-  // Stop any pending request
-  if (request) {
-    request.abort();
-  }
+    // Disable inputs for the duration of the AJAX request
+    var $inputs = $form.find('input, button');
+    var serializedData = $form.serialize();
+    $inputs.prop('disabled', true);
 
-  // Store the form
-  var $form = $(this);
+    // Send request
+    var request = $.post('/login', serializedData, function(response) {
+      console.log('Response: ' + response);
+    });
 
-  // Disable inputs for the duration of the AJAX request
-  var $inputs = $form.find('input, button');
-  $inputs.prop('disabled', true);
+    // Callback handler called on success
+    request.done(function(response, textStatus, jqXHR) {
+      $('#password-error').html(response);
+    });
 
-  // Send request
-  request = $.post('/index#loginForm', function(response) {
-    // Test
-    console.log('Response: ' + response);
+    // Callback handler called on failure
+    request.fail(function(jqXHR, textStatus, errorThrown) {
+      console.log('An error occurred: ' + errorThrown);
+    });
+
+    // Callback handler called no matter what
+    request.always(function() {
+      // Reenable the form inputs
+      $inputs.prop('disabled', false);
+    });
+
+    // Prevent default handling of form
+    e.preventDefault();
   });
-
-  // Callback handler that will fire on success
-  request.done(function(response, textStatus, jqXHR) {
-    console.log('Request sent successfully!');
-  });
-
-  // Callback handler that will fire on failure
-  request.fail(function(jqXHR, textStatus, errorThrown) {
-    console.log('An error occurred: ' + textStatus, errorThrown);
-  });
-
-  // Callback handler that will be called no matter what
-  request.always(function() {
-    // Reenable the form inputs
-    $inputs.prop('disabled', false);
-    console.log('Form inputs have been reenabled.');
-  });
-
-  // Finally, prevent default posting of the form
-  event.preventDefault();
 });
 
