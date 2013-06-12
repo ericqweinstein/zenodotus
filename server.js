@@ -116,8 +116,7 @@ app.post('/books', function(req, res) {
     }
   });
 
-  res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-  res.render('index');
+  res.redirect('/');
 });
 
 // JSON endpoint for users (TEMPORARY)
