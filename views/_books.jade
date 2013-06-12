@@ -1,7 +1,10 @@
 div.row.books-container
   div.span7.offset4(ng-controller='BookCtrl')
+    form.form-search.offset2
+      input(type='text', placeholder='Search', ng-model='searchText').input.search-query
+
     ul.books
-      li(ng-repeat='book in books | filter: {available: true}')
+      li(ng-repeat='book in books | filter: searchText')
         i.icon-book
         a(href='#') {{ " " + book.title + " "}}
         span ({{"Quantity: " + book.quantity}})
