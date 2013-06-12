@@ -23,7 +23,7 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
      angular.forEach($scope.books, function() {
        count++;
      });
-    var pluralization = count == 1 ? " book" : " books";
+    var pluralization = count == 1 ? " title" : " titles";
     return count + pluralization;
   };
 }]);
