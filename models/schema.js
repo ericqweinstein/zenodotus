@@ -1,11 +1,12 @@
 'use strict';
 
-var mongoose = require('mongoose')
-  , bcrypt   = require('bcrypt')
+var mongoose  = require('mongoose')
+  , bcrypt    = require('bcrypt')
   , SALT_WORK_FACTOR = 10
-  , LOCAL_DB = 'mongodb://localhost/hs-library';
+  , LOCAL_DB  = 'mongodb://localhost/hs-library'
+  , REMOTE_DB = process.env.MONGOHQ_URL;
 
-mongoose.connect(LOCAL_DB || process.env.MONGOHQ_URL);
+mongoose.connect(REMOTE_DB || LOCAL_DB);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error:'));
