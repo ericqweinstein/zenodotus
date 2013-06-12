@@ -115,7 +115,8 @@ app.post('/books', function(req, res) {
       res.render('500', { message: err.message });
     }
   });
-  
+
+  res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
   res.render('index');
 });
 
