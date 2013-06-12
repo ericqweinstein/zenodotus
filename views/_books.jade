@@ -1,4 +1,4 @@
-div.row
+div.row.books-container
   div.span7.offset4(ng-controller='BookCtrl')
     ul.books
       li(ng-repeat='book in books | filter: {available: true}')

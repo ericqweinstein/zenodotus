@@ -42,6 +42,10 @@ li a:hover {
 
 /* Main */
 
+.books-container {
+  padding-bottom: 50px;
+}
+
 .books {
   list-style-type: none;
 }
