@@ -7,7 +7,7 @@
   , "jade": "0.31.x"
   , "mocha": "1.10.x"
   , "bcrypt": "0.7.x"
-  , "mongoose": "1.1.x"
+  , "mongoose": "1.1.63"
   }
 , "engines": {
     "node": "0.10.x"
