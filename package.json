@@ -1,12 +1,17 @@
 {
-  "name": "zenodotus",
-  "description": "Tracking books in the Hacker School Library.",
-  "version": "0.0.1",
-  "dependencies": {
-    "express": "3.2.x",
-    "jade": "0.31.x",
-    "mocha": "1.10.x",
-    "bcrypt": "0.7.x"
+  "name": "zenodotus"
+, "description": "Tracking books in the Hacker School Library."
+, "version": "0.0.1"
+, "dependencies": {
+    "express": "3.2.x"
+  , "jade": "0.31.x"
+  , "mocha": "1.10.x"
+  , "bcrypt": "0.7.x"
+  , "mongoose": "1.1.x"
+  }
+, "engines": {
+    "node": "0.10.x"
+  , "npm": "1.2.x"
   }
 }
 
