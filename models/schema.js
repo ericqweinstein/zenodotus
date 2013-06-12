@@ -5,7 +5,7 @@ var mongoose = require('mongoose')
   , SALT_WORK_FACTOR = 10
   , LOCAL_DB = 'mongodb://localhost/hs-library';
 
-mongoose.connect(LOCAL_DB || MONGOHQ_URL);
+mongoose.connect(LOCAL_DB || process.env.MONGOHQ_URL);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error:'));
