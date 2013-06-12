@@ -1,7 +1,7 @@
 // Signup modal
 div.modal.hide.fade#signupModal(tabindex='-1', role='dialog', aria-labelledby='signupModalLabel', aria-hidden='true')
   div.modal-header
-    button.close(type='button', data-dismiss='modal', aria-hidden='true') x
+    button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
     h3#signupModalLabel Sign Up
   div.modal-body(ng-controller='UserCtrl')
     form.css-form(name='signupForm', method='post', action='/signup', id='signupForm')
