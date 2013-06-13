@@ -26,5 +26,11 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
     var pluralization = count == 1 ? " title" : " titles";
     return count + pluralization;
   };
+
+  $scope.tokenizeTitle = function(title) {
+    var forbiddenTokens = /[-:\/?!.;]/g;
+    var cleanedTitle    = title.toLowerCase().replace(forbiddenTokens, '');
+    return cleanedTitle.replace(/\s+/g, '-');
+  };
 }]);
 

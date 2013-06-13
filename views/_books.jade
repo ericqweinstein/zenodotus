@@ -4,11 +4,11 @@ div.row.books-container
       input(type='text', placeholder='Search', ng-model='searchText').input.search-query
 
     ul.books
-      li(ng-repeat='book in books | filter: searchText')
+      li(ng-repeat='book in books | filter: searchText', ng-class="{'unavailable-detail' : !book.available}")
         i.icon-book
-        a(href='#') {{ " " + book.title + " "}}
+        a(href='#detailModal', role='button', data-toggle='modal') {{" " + book.title + " "}}
         span ({{"Quantity: " + book.quantity}})
-        a.btn.btn-success.btn-mini.pull-right(href='#') Check out
+        a.btn.btn-mini.pull-right.span1(href='/checkout', ng-class="{'disabled btn-danger unavailable-link': !book.available, 'btn-success': book.available}") {{book.available && "Check out" || "Unavailable"}}
         br
         br
 

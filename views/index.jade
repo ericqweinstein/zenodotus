@@ -31,8 +31,9 @@ html(ng-app='zenodotus')
 
     - if (cookieValid) {
         include _books
+        include _detail_modal
     - } else {
-        a(href='/#loginModal', role='button', data-toggle='modal').btn.btn-success.btn-large.span3.offset6 Check them out!
+        a(href='/#loginModal', role='button', data-toggle='modal').btn.btn-success.btn-large.span1.offset7 Log in!
     - }
 
   - if (isAdmin) {

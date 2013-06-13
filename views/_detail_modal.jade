@@ -1,0 +1,12 @@
+// Book detail modal
+div.modal.hide.fade#detailModal(tabindex='-1', role='dialog', aria-labelledby='detailModalLabel', aria-hidden='true')
+  div.modal-header(ng-controller='BookCtrl')
+    button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+    h3#detailModalLabel BOOK TITLE TK
+  div.modal-body
+    p DUMP OF DATA FOR CURRENT BOOK
+  div.modal-footer
+    a(href='http://www.amazon.com/').btn.pull-left View on Amazon
+    a(href='/checkout').btn.btn-success.pull-left Check out
+    button(type='button', data-dismiss='modal', aria-hidden='true').btn.pull-right Close
+

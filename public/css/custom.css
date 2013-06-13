@@ -50,6 +50,16 @@ li a:hover {
   list-style-type: none;
 }
 
+.unavailable-detail {
+  opacity: 0.5;
+}
+
+.unavailable-link {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+}
+
 /* Admin */
 
 .add-books {
