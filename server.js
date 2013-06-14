@@ -51,7 +51,7 @@ app.post('/signup', function(req, res) {
   });
   
   res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-  res.render('index');
+  res.redirect('/');
 });
 
 app.post('/login', function(req, res) {
@@ -75,7 +75,7 @@ app.post('/login', function(req, res) {
         res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
         req.session.isAdmin = user.admin
 
-        res.render('index');
+        res.redirect('/');
       } else {
         res.send(passwordError);
       }
@@ -86,7 +86,7 @@ app.post('/login', function(req, res) {
 app.get('/logout', function(req, res) {
   res.clearCookie('rememberToken');
   req.session.destroy();
-  res.render('index');
+  res.redirect('/');
 });
 
 // JSON endpoint for books
@@ -125,6 +125,10 @@ app.get('/users', function(req, res) {
     if (err) { console.log('An error occurred: ' + err.message); }
     res.json(users);
   });
+});
+
+app.get('/checkout', function(req, res) {
+  res.redirect('/');
 });
 
 // Handle errors

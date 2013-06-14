@@ -40,7 +40,7 @@ li a:hover {
   margin-right: -118px;
 }
 
-/* Main */
+/* Books */
 
 .books-container {
   padding-bottom: 50px;
@@ -58,6 +58,19 @@ li a:hover {
   opacity: 0.5;
   pointer-events: none;
   cursor: default;
+}
+
+.jacket {
+  width: 200px;
+  height: 300px;
+}
+
+.detail-left-column {
+  float: left;
+}
+
+.detail-right-column {
+  float: right;
 }
 
 /* Admin */

@@ -32,5 +32,14 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
     var cleanedTitle    = title.toLowerCase().replace(forbiddenTokens, '');
     return cleanedTitle.replace(/\s+/g, '-');
   };
+
+  $scope.currentTitleIndex = 0;
+
+  jQuery(document).on('click', '.book-title', function() {
+    var self = this;
+    $scope.$apply(function() {
+      $scope.currentTitleIndex = +self.href.split('/')[3];
+    });
+  });
 }]);
 

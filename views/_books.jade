@@ -6,7 +6,7 @@ div.row.books-container
     ul.books
       li(ng-repeat='book in books | filter: searchText', ng-class="{'unavailable-detail' : !book.available}")
         i.icon-book
-        a(href='#detailModal', role='button', data-toggle='modal') {{" " + book.title + " "}}
+        a.book-title(href='/{{$index}}/#detail', role='button', data-toggle='modal') {{" " + book.title + " "}}
         span ({{"Quantity: " + book.quantity}})
         a.btn.btn-mini.pull-right.span1(href='/checkout', ng-class="{'disabled btn-danger unavailable-link': !book.available, 'btn-success': book.available}") {{book.available && "Check out" || "Unavailable"}}
         br
