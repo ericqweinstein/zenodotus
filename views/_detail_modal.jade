@@ -5,10 +5,11 @@ div.modal.hide.fade#detail(tabindex='-1', role='dialog', aria-labelledby='detail
     h3#detailModalLabel {{books[currentTitleIndex].title}}
   div.modal-body
     div.detail-left-column
-      img(src='img/cover_tk.jpg').jacket
+      img(src='http://content-3.powells.com/cgi-bin/imageDB.cgi?isbn={{books[currentTitleIndex].isbn}}').jacket
     div.detail-right-column.span4
-      p ISBN: {{books[currentTitleIndex].isbn}}
-      p Fancy review text TK
+      p ISBN:
+        span.isbn {{" " + books[currentTitleIndex].isbn}}
+      p {{bookDescription}}
   div.modal-footer
     a(href='http://www.amazon.com/').btn.pull-left View on Amazon
     a(href='/checkout').btn.btn-success.pull-left Check out

@@ -33,13 +33,30 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
     return cleanedTitle.replace(/\s+/g, '-');
   };
 
-  $scope.currentTitleIndex = 0;
+  $scope.currentTitleIndex;
+  $scope.bookDescription;
 
+  // Get the current title index for the title detail view
   jQuery(document).on('click', '.book-title', function() {
     var self = this;
     $scope.$apply(function() {
       $scope.currentTitleIndex = +self.href.split('/')[3];
     });
   });
+
+  // AJAX request for book metadata
+  // via the Google Books API
+  //
+  // 1. For some reason, this is being called four times for each click.
+  // 2. For some reason, it's always one click behind.
+  jQuery(document).on('click', '.book-title', function() {
+    $scope.$apply(function() {
+      // Hard code an ISBN for the test
+      var response = jQuery.get('https://www.googleapis.com/books/v1/volumes?q=isbn:' + $('.isbn').html(), function() {
+        }).done(function(data) { console.log('Request successful.');
+                                 $scope.bookDescription = data['items'][0]['volumeInfo']['description']; })
+          .fail(function() { console.log('An error occurred.'); });
+      });
+    });
 }]);
 
