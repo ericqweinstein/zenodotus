@@ -5,7 +5,8 @@ div.modal.hide.fade#detail(tabindex='-1', role='dialog', aria-labelledby='detail
     h3#detailModalLabel {{books[currentTitleIndex].title}}
   div.modal-body
     div.detail-left-column
-      img(src='http://content-3.powells.com/cgi-bin/imageDB.cgi?isbn={{books[currentTitleIndex].isbn}}').jacket
+      img(src='{{bookCoverLink}}').jacket
+      // img(src='http://content-3.powells.com/cgi-bin/imageDB.cgi?isbn={{books[currentTitleIndex].isbn}}').jacket
     div.detail-right-column.span4
       p ISBN:
         span.isbn {{" " + books[currentTitleIndex].isbn}}
