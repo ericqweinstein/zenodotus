@@ -57,12 +57,11 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
   jQuery(document).on('click', '.book-title', function() {
     $scope.$apply(function() {
       var response = jQuery.get('https://www.googleapis.com/books/v1/volumes?q=isbn:' + $('.isbn').html(), function() {
-        }).done(function(data) { console.log('Request successful.');
-                                 $scope.bookDescription = data['items'][0]['volumeInfo']['description'];
+        }).done(function(data) { $scope.bookDescription = data['items'][0]['volumeInfo']['description'];
                                  $scope.bookCoverLink   = data['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
                                  $scope.bookPreviewLink = data['items'][0]['volumeInfo']['infoLink']; })
           .fail(function() { console.log('An error occurred.'); });
-      });
     });
+  });
 }]);
 
