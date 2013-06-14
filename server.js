@@ -1,5 +1,16 @@
 'use strict';
 
+/*
+ * Zenodotus
+ *
+ * An application to track books in the Hacker School library.
+ * Named for the first librarian of the Library of Alexandria.
+ *
+ * (c) 2013 Eric Weinstein
+ *
+ * See LICENSE for copying
+ */
+
 /* Modules */
 
 var express = require('express')
