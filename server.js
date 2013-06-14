@@ -91,7 +91,13 @@ app.get('/logout', function(req, res) {
 
 // JSON endpoint for books
 app.get('/books', function(req, res) {
-  db.book.find(function(err, books) {
+  var query = db.book.find(function(err) {
+    if (err) { console.log('An error occurred: ' + err.message); }
+  });
+
+  query.select('-_id -__v');
+
+  query.exec(function(err, books) {
     if (err) { console.log('An error occurred: ' + err.message); }
     res.json(books);
   });
@@ -119,9 +125,15 @@ app.post('/books', function(req, res) {
   res.redirect('/');
 });
 
-// JSON endpoint for users (TEMPORARY)
+// JSON endpoint for users
 app.get('/users', function(req, res) {
-  db.user.find(function(err, users) {
+  var query = db.user.find(function(err) {
+    if (err) { console.log('An error occurred: ' + err.message); }
+  });
+
+  query.select('name books -_id');
+
+  query.exec(function(err, users) {
     if (err) { console.log('An error occurred: ' + err.message); }
     res.json(users);
   });
