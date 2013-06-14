@@ -104,7 +104,7 @@ app.get('/logout', function(req, res) {
 app.get('/books', function(req, res) {
   var query = db.book.find(function(err) {
     if (err) { console.log('An error occurred: ' + err.message); }
-  });
+  }).sort('title');
 
   query.select('-_id -__v');
 
@@ -140,7 +140,7 @@ app.post('/books', function(req, res) {
 app.get('/users', function(req, res) {
   var query = db.user.find(function(err) {
     if (err) { console.log('An error occurred: ' + err.message); }
-  });
+  }).sort('name');
 
   query.select('name books -_id');
 
