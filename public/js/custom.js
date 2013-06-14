@@ -1,11 +1,10 @@
 'use strict';
 
-/*
- * AJAX request for handling error
- * messages displayed inside modals.
- */
-
 $(function() {
+
+  // AJAX request for handling error
+  // messages displayed inside modals.
+
   // Bind to the submit event on the login form
   $('body').on('submit', '#loginForm', function(e) {
     // Store the form
@@ -46,13 +45,9 @@ $(function() {
     // Prevent default handling of form
     e.preventDefault();
   });
-});
 
-/*
- * Open all external links in new windows.
- */
+  // Open all external links in new windows.
 
-$(function() {
   $('a').each(function() {
     var a = new RegExp('/' + window.location.host + '/');
     if (!a.test(this.href)) {
