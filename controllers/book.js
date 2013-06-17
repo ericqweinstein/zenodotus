@@ -6,7 +6,7 @@ zenodotus.factory('Book', ['$resource', function($resource) {
   return $resource('/books/:id', {id: '@id'});
 }]);
 
-zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
+zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $http, Book) {
   $scope.books = Book.query();
 
   $scope.search = function(query) {
@@ -35,13 +35,11 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
   $scope.getTitleIndex = function() {
     return $scope.titleIndex;
   };
-}]);
 
-// Angular AJAX controller for retrieving
-// book data via the Google Books API
-//
-// (Using a test ISBN for now)
-function BookFetchCtrl($scope, $http) {
+  // Angular AJAX controller for retrieving
+  // book data via the Google Books API
+  //
+  // (Using a test ISBN for now)
   $scope.method = 'JSONP'
 , $scope.url    = 'https://www.googleapis.com/books/v1/volumes?q=isbn:9780139376818&callback=JSON_CALLBACK'
 , $scope.fetch  = function() {
@@ -62,5 +60,5 @@ function BookFetchCtrl($scope, $http) {
         console.log(data);
     });
   };
-}
+}]);
 
