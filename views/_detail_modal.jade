@@ -2,13 +2,13 @@
 div.modal.hide.fade#detail(tabindex='-1', role='dialog', aria-labelledby='detailModalLabel', aria-hidden='true', ng-controller='BookFetchCtrl')
   div.modal-header
     button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
-    h3#detailModalLabel {{books[currentTitleIndex].title}}
+    h3#detailModalLabel {{books[getTitleIndex].title}}
   div.modal-body
     div.detail-left-column
       img(src='{{bookCoverLink}}')
     div.detail-right-column.span4
       p ISBN:
-        span.isbn {{" " + books[currentTitleIndex].isbn}}
+        span.isbn {{" " + books[getTitleIndex].isbn}}
       p {{bookDescription}}
   div.modal-footer
     a(href='{{bookInfoLink}}', target='_blank').btn.pull-left View on Google Books

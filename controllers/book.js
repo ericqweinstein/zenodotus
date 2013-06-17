@@ -57,13 +57,13 @@ function BookFetchCtrl($scope, $http) {
   $scope.alertData = function(data) { alert(data); }
 
   // Get the current title index for the title detail view
-  //
-  // BUG: $index rebinds on filter
-  jQuery(document).on('click', '.book-title', function() {
+  
+  $scope.getTitleIndex = function() {
     var self = this;
+    // Force a digest()
     $scope.$apply(function() {
       $scope.currentTitleIndex = +self.href.split('/')[3];
     });
-  });
+  };
 }
 
