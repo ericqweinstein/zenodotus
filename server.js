@@ -100,6 +100,10 @@ app.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
+app.get('/settings', function(req, res) {
+  res.render('index');
+});
+
 // JSON endpoint for books
 app.get('/books', function(req, res) {
   var query = db.book.find(function(err) {
