@@ -13,6 +13,10 @@ zenodotus.factory('Book', ['$resource', function($resource) {
     return this.title;
   };
 
+  Book.prototype.getIsbn = function() {
+    return this.isbn;
+  }
+
   return Book;
 }]);
 
@@ -54,7 +58,8 @@ zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $h
         $scope.bookDescription = data['items'][0]['volumeInfo']['description'];
         $scope.bookCoverLink   = data['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
         $scope.bookInfoLink    = data['items'][0]['volumeInfo']['infoLink'];
-        $scope.bookTitle = self.book.getTitle();
+        $scope.bookTitle       = self.book.getTitle();
+        $scope.bookIsbn        = self.book.getIsbn();
       }).
       error(function(data, status) {
         $scope.data   = data || 'Request failed.';

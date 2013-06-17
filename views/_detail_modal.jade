@@ -4,12 +4,15 @@ div.modal.hide.fade#detail(tabindex='-1', role='dialog', aria-labelledby='detail
     button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
     h3#detailModalLabel {{bookTitle}}
   div.modal-body
-    div.detail-left-column(ng-model='bookCoverLink')
-      img(src='{{bookCoverLink}}')
-    div.detail-right-column.span4(ng-model='bookDescription')
-      p(ng-model='bookDescription') {{bookDescription}}
+    form.css-form#checkoutForm(name='checkoutForm', method='post', action='/checkout')
+      div.detail-left-column(ng-model='bookCoverLink')
+        img(src='{{bookCoverLink}}')
+        br
+        input(type='hidden', name='ISBN', value='{{bookIsbn}}')
+        button(type='submit').btn.btn-success.pull-left.push-down Check out
+      div.detail-right-column.span4(ng-model='bookDescription')
+        p(ng-model='bookDescription') {{bookDescription}}
   div.modal-footer(ng-model='bookInfoLink')
-    a(href='{{bookInfoLink}}', target='_blank').btn.pull-left View on Google Books
-    a(href='/checkout').btn.btn-success.pull-left Check out
+    a(href='{{bookInfoLink}}', target='_blank').btn.btn-success View on Google Books
     button(type='button', data-dismiss='modal', aria-hidden='true').btn.pull-right Close
 

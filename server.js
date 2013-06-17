@@ -150,7 +150,13 @@ app.get('/users', function(req, res) {
   });
 });
 
-app.get('/checkout', function(req, res) {
+app.post('/checkout', function(req, res) {
+  var bookIsbn = +req.body.ISBN;
+  // !!! Unsafe !!!
+  db.book.update({ isbn: bookIsbn }, { $set : { available: false } }, function(err) {
+    if (err) { console.log('An error occurred: ' + err); }
+  });
+
   res.redirect('/');
 });
 
