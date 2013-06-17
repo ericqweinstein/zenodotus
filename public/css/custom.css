@@ -60,11 +60,6 @@ li a:hover {
   cursor: default;
 }
 
-.jacket {
-  width: 200px;
-  height: 300px;
-}
-
 .detail-left-column {
   float: left;
 }

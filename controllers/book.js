@@ -37,7 +37,7 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
   $scope.currentTitleIndex;
   $scope.bookDescription;
   $scope.bookCoverLink;
-  $scope.bookPreviewLink;
+  $scope.bookInfoLink;
 
   // Get the current title index for the title detail view
   //
@@ -51,15 +51,12 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
 
   // AJAX request for book metadata
   // via the Google Books API
-  //
-  // BUG: called four times for each click
-  // BUG: always one click behind
   jQuery(document).on('click', '.book-title', function() {
     $scope.$apply(function() {
       var response = jQuery.get('https://www.googleapis.com/books/v1/volumes?q=isbn:' + $('.isbn').html(), function() {
         }).done(function(data) { $scope.bookDescription = data['items'][0]['volumeInfo']['description'];
                                  $scope.bookCoverLink   = data['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
-                                 $scope.bookPreviewLink = data['items'][0]['volumeInfo']['infoLink']; })
+                                 $scope.bookInfoLink = data['items'][0]['volumeInfo']['infoLink']; })
           .fail(function() { console.log('An error occurred.'); });
     });
   });

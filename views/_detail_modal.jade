@@ -11,7 +11,7 @@ div.modal.hide.fade#detail(tabindex='-1', role='dialog', aria-labelledby='detail
         span.isbn {{" " + books[currentTitleIndex].isbn}}
       p {{bookDescription}}
   div.modal-footer
-    a(href='{{bookPreviewLink}}', target='_blank').btn.pull-left View on Google Books
+    a(href='{{bookInfoLink}}', target='_blank').btn.pull-left View on Google Books
     a(href='/checkout').btn.btn-success.pull-left Check out
     button(type='button', data-dismiss='modal', aria-hidden='true').btn.pull-right Close
 
