@@ -34,7 +34,7 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
 // (Using a test ISBN for now)
 function BookFetchCtrl($scope, $http) {
   $scope.method = 'JSONP'
-, $scope.url    = 'https://www.googleapis.com/books/v1/volumes?q=isbn:9780139376818?callback=alertData'
+, $scope.url    = 'https://www.googleapis.com/books/v1/volumes?q=isbn:9780139376818&callback=JSON_CALLBACK'
 , $scope.fetch  = function() {
     $scope.bookDescription = null
   , $scope.bookCoverLink   = null
@@ -45,25 +45,20 @@ function BookFetchCtrl($scope, $http) {
         $scope.bookDescription = data['items'][0]['volumeInfo']['description'];
         $scope.bookCoverLink   = data['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
         $scope.bookInfoLink    = data['items'][0]['volumeInfo']['infoLink'];
-        console.log(data);
       }).
       error(function(data, status) {
         $scope.data   = data || 'Request failed.';
         $scope.status = status;
+        console.log(status);
         console.log(data);
     });
   };
 
-  $scope.alertData = function(data) { alert(data); }
-
   // Get the current title index for the title detail view
-  
+  //
+  // Test with 0
   $scope.getTitleIndex = function() {
-    var self = this;
-    // Force a digest()
-    $scope.$apply(function() {
-      $scope.currentTitleIndex = +self.href.split('/')[3];
-    });
+    $scope.currentTitleIndex = 0;
   };
 }
 
