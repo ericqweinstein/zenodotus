@@ -9,7 +9,7 @@ div.row.books-container(ng-controller='BookCtrl')
         i.icon-book
         a.book-title(href='/{{$index}}/#detail', role='button', data-toggle='modal', ng-click='fetch($event)',) {{" " + book.title + " "}}
         span ({{"Quantity: " + book.quantity}})
-        a.btn.btn-mini.pull-right.span1(href='/checkout', ng-class="{'disabled btn-danger unavailable-link': !book.available, 'btn-success': book.available}") {{book.available && "Check out" || "Unavailable"}}
+        a.btn.btn-mini.pull-right.span1(href='/#', ng-class="{'disabled btn-danger unavailable-link': !book.available, 'btn-success': book.available}") {{book.available && "Check out" || "Unavailable"}}
         br
         br
 
