@@ -58,5 +58,8 @@ $(function() {
       });
     }
   });
+
+  // Settings dropdown
+  $('.dropdown-toggle').dropdown();
 });
 
