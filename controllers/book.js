@@ -27,13 +27,15 @@ zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $h
     return count + pluralization;
   };
 
+  // Attributes for title detail view
+  $scope.titleIndex      = null
+, $scope.bookDescription = null
+, $scope.bookCoverLink   = null
+, $scope.bookInfoLink    = null;
+
   // Bug: $index rebinds on filter
   $scope.setTitleIndex = function($event) {
     $scope.titleIndex = $event.target.toString().split('/')[3];
-  };
-
-  $scope.getTitleIndex = function() {
-    return $scope.titleIndex;
   };
 
   // Angular AJAX controller for retrieving
@@ -43,15 +45,12 @@ zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $h
   $scope.method = 'JSONP'
 , $scope.url    = 'https://www.googleapis.com/books/v1/volumes?q=isbn:9780139376818&callback=JSON_CALLBACK'
 , $scope.fetch  = function() {
-    $scope.bookDescription = null
-  , $scope.bookCoverLink   = null
-  , $scope.bookInfoLink    = null;
-
     $http({ method: $scope.method, url: $scope.url }).
       success(function(data, status) {
         $scope.bookDescription = data['items'][0]['volumeInfo']['description'];
         $scope.bookCoverLink   = data['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
         $scope.bookInfoLink    = data['items'][0]['volumeInfo']['infoLink'];
+        console.log('Book description: ' + $scope.bookDescription);
       }).
       error(function(data, status) {
         $scope.data   = data || 'Request failed.';
