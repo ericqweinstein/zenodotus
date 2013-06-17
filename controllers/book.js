@@ -4,8 +4,13 @@ var zenodotus = angular.module('zenodotus', ['ngResource']);
 
 zenodotus.factory('Book', ['$resource', function($resource) {
   var Book = $resource('/books/:id', {id: '@id'});
+
   Book.prototype.getUrl = function() {
     return 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + this.isbn + '&callback=JSON_CALLBACK'
+  };
+
+  Book.prototype.getTitle = function() {
+    return this.title;
   };
 
   return Book;
@@ -33,7 +38,7 @@ zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $h
   };
 
   // Attributes for title detail view
-  $scope.titleIndex      = null
+  $scope.bookTitle       = null
 , $scope.bookDescription = null
 , $scope.bookCoverLink   = null
 , $scope.bookInfoLink    = null;
@@ -43,12 +48,13 @@ zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $h
   //
   // (Using a test ISBN for now)
   $scope.fetch  = function($event) {
-    $http({ method: 'JSONP', url: this.book.getUrl() }).
+    var self = this;
+    $http({ method: 'JSONP', url: self.book.getUrl() }).
       success(function(data, status) {
         $scope.bookDescription = data['items'][0]['volumeInfo']['description'];
         $scope.bookCoverLink   = data['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
         $scope.bookInfoLink    = data['items'][0]['volumeInfo']['infoLink'];
-        $scope.titleIndex = $event.target.toString().split('/')[3];
+        $scope.bookTitle = self.book.getTitle();
       }).
       error(function(data, status) {
         $scope.data   = data || 'Request failed.';

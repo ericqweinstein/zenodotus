@@ -2,7 +2,7 @@
 div.modal.hide.fade#detail(tabindex='-1', role='dialog', aria-labelledby='detailModalLabel', aria-hidden='true')
   div.modal-header(ng-model='titleIndex')
     button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
-    h3#detailModalLabel {{books[titleIndex].title}}
+    h3#detailModalLabel {{bookTitle}}
   div.modal-body
     div.detail-left-column(ng-model='bookCoverLink')
       img(src='{{bookCoverLink}}')
