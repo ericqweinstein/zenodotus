@@ -1,5 +1,5 @@
 // Book detail modal
-div.modal.hide.fade#detail(tabindex='-1', role='dialog', aria-labelledby='detailModalLabel', aria-hidden='true', ng-controller='BookCtrl')
+div.modal.hide.fade#detail(tabindex='-1', role='dialog', aria-labelledby='detailModalLabel', aria-hidden='true', ng-controller='BookFetchCtrl')
   div.modal-header
     button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
     h3#detailModalLabel {{books[currentTitleIndex].title}}
