@@ -26,6 +26,15 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
     var pluralization = count == 1 ? " title" : " titles";
     return count + pluralization;
   };
+
+  // Bug: $index rebinds on filter
+  $scope.setTitleIndex = function($event) {
+    $scope.titleIndex = $event.target.toString().split('/')[3];
+  };
+
+  $scope.getTitleIndex = function() {
+    return $scope.titleIndex;
+  };
 }]);
 
 // Angular AJAX controller for retrieving
@@ -52,13 +61,6 @@ function BookFetchCtrl($scope, $http) {
         console.log(status);
         console.log(data);
     });
-  };
-
-  // Get the current title index for the title detail view
-  //
-  // Test with 0
-  $scope.getTitleIndex = function() {
-    $scope.currentTitleIndex = 0;
   };
 }
 

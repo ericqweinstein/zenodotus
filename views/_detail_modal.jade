@@ -1,16 +1,14 @@
 // Book detail modal
-div.modal.hide.fade#detail(tabindex='-1', role='dialog', aria-labelledby='detailModalLabel', aria-hidden='true', ng-controller='BookFetchCtrl')
-  div.modal-header
+div.modal.hide.fade#detail(tabindex='-1', role='dialog', aria-labelledby='detailModalLabel', aria-hidden='true')
+  div.modal-header(ng-controller='BookCtrl')
     button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
-    h3#detailModalLabel {{books[getTitleIndex()].title}}
-  div.modal-body
+    h3#detailModalLabel {{getTitleIndex()}}
+  div.modal-body(ng-controller='BookFetchCtrl')
     div.detail-left-column
       img(src='{{bookCoverLink}}')
     div.detail-right-column.span4
-      p ISBN:
-        span.isbn {{" " + books[getTitleIndex()].isbn}}
       p {{bookDescription}}
-  div.modal-footer
+  div.modal-footer(ng-controller='BookFetchCtrl')
     a(href='{{bookInfoLink}}', target='_blank').btn.pull-left View on Google Books
     a(href='/checkout').btn.btn-success.pull-left Check out
     button(type='button', data-dismiss='modal', aria-hidden='true').btn.pull-right Close
