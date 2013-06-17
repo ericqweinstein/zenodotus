@@ -27,10 +27,11 @@ zenodotus.controller('BookCtrl', ['$scope', 'Book', function($scope, Book) {
     return count + pluralization;
   };
 
+  // May be deprecated
   $scope.tokenizeTitle = function(title) {
     var forbiddenTokens = /[-:\/?!.;]/g;
-    var cleanedTitle    = title.toLowerCase().replace(forbiddenTokens, '');
-    return cleanedTitle.replace(/\s+/g, '-');
+    return title.toLowerCase().replace(forbiddenTokens, '')
+                              .replace(/\s+/g, '-');
   };
 
   // Attributes for the title detail view
