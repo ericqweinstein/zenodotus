@@ -8,6 +8,14 @@
   margin-left: 3px;
 }
 
+.big-indent {
+  margin-left: 100px;
+}
+
+.big-indent.indent {
+  margin-left: 103px;
+}
+
 li a:hover {
   text-decoration: none;
 }
@@ -41,7 +49,7 @@ li a:hover {
 }
 
 .me-view {
-  margin-right: -158px;
+  margin-right: -160px;
 }
 
 .dropdown-menu.right {
