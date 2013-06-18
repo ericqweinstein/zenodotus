@@ -4,10 +4,15 @@ div.modal.hide.fade#settingsModal(tabindex='-1', role='dialog', aria-labelledby=
     button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
     h3#settingsModalLabel Settings
   div.modal-body
-    h4 Username:
-    p #{currentUser.email}
-    h4 Change password:
-    p TK
-  div.modal-footer
-    button.btn.pull-right(data-dismiss='modal', aria-hidden='true') Close
+    form.css-form#settingsForm(name='settingsForm', method='post', action='#')
+      h4 Username:
+      p #{currentUser.email}
+      h4 Change password:
+      input(type='password', name='oldPassword', placeholder='Old password', ng-model='password', required)
+      input.indent(type='password', name='newPassword', placeholder='New password', ng-model='password', required)
+      br
+      p.text-error#password-error
+      br
+      button.btn.btn-success(type='submit') Change password
+      button.btn.pull-right(data-dismiss='modal', aria-hidden='true') Close
 
