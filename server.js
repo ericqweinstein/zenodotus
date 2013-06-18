@@ -38,7 +38,8 @@ app.use(express.favicon('public/img/favicon.ico'));
 
 app.get('/', function(req, res) {
   res.render('index', { cookieValid: req.signedCookies.rememberToken === '1'
-                      , isAdmin: req.session.isAdmin });
+                      , isAdmin: req.session.isAdmin
+                      , userName: req.session.userName });
 });
 
 app.post('/signup', function(req, res) {
@@ -84,7 +85,8 @@ app.post('/login', function(req, res) {
 
       if (isMatch) {
         res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-        req.session.isAdmin = user.admin
+        req.session.isAdmin  = user.admin;
+        req.session.userName = user.email;
 
         res.redirect('/');
       } else {
@@ -142,7 +144,7 @@ app.get('/users', function(req, res) {
     if (err) { console.log('An error occurred: ' + err.message); }
   }).sort('name');
 
-  query.select('name books -_id');
+  query.select('name email books -_id');
 
   query.exec(function(err, users) {
     if (err) { console.log('An error occurred: ' + err.message); }
