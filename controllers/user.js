@@ -1,7 +1,9 @@
 'use strict';
 
 zenodotus.factory('User', ['$resource', function($resource) {
-  return $resource('/users/:id', {id: '@id'});
+  var User = $resource('/users/:id', {id: '@id'});
+
+  return User;
 }]);
 
 zenodotus.controller('UserCtrl', ['$scope', 'User', function($scope, User) {

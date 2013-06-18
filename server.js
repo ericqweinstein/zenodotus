@@ -38,8 +38,7 @@ app.use(express.favicon('public/img/favicon.ico'));
 
 app.get('/', function(req, res) {
   res.render('index', { cookieValid: req.signedCookies.rememberToken === '1'
-                      , isAdmin: req.session.isAdmin
-                      , userName: req.session.userName });
+                      , currentUser: req.session.currentUser });
 });
 
 app.post('/signup', function(req, res) {
@@ -85,8 +84,7 @@ app.post('/login', function(req, res) {
 
       if (isMatch) {
         res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-        req.session.isAdmin  = user.admin;
-        req.session.userName = user.email;
+        req.session.currentUser = user;
 
         res.redirect('/');
       } else {
