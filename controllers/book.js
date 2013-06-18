@@ -49,8 +49,6 @@ zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $h
 
   // Angular AJAX controller for retrieving
   // book data via the Google Books API
-  //
-  // (Using a test ISBN for now)
   $scope.fetch  = function($event) {
     var self = this;
     $http({ method: 'JSONP', url: self.book.getUrl() }).
