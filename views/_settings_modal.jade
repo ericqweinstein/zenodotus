@@ -1,0 +1,10 @@
+// Settings modal
+div.modal.hide.fade#settingsModal(tabindex='-1', role='dialog', aria-labelledby='settingsModalLabel', aria-hidden='true', ng-controller='UserCtrl')
+  div.modal-header
+    button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+    h3#settingsModalLabel Settings
+  div.modal-body
+    p Username: {{users}}
+  div.modal-footer
+    button.btn.pull-right(data-dismiss='modal', aria-hidden='true') Close
+

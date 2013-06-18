@@ -18,6 +18,9 @@ html(ng-app='zenodotus')
     include _header
     include _login_modal
     include _signup_modal
+    - if (cookieValid) {
+        include _settings_modal
+    - }
 
     div.hero-unit
       h1 Hacker School Library

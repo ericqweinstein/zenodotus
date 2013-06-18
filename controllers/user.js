@@ -5,7 +5,6 @@ zenodotus.factory('User', ['$resource', function($resource) {
 }]);
 
 zenodotus.controller('UserCtrl', ['$scope', 'User', function($scope, User) {
-  // Put this back for now
   $scope.users = User.query();
 
   $scope.search = function(query) {

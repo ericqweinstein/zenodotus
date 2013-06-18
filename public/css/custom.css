@@ -36,6 +36,11 @@ li a:hover {
   margin-right: -130px;
 }
 
+.dropdown-menu.right {
+  left: auto;
+  right: 0;
+}
+
 .signup {
   margin-right: -118px;
 }
