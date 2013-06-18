@@ -7,9 +7,9 @@ div.row.books-container(ng-controller='BookCtrl')
     ul.books
       li(ng-repeat='book in books | filter: searchText', ng-class="{'unavailable-detail' : !book.available}")
         i.icon-book
-        a.book-title(href='/{{$index}}/#detail', role='button', data-toggle='modal', ng-click='fetch($event)',) {{" " + book.title + " "}}
+        span {{" " + book.title + " "}}
         span ({{"Quantity: " + book.quantity}})
-        a.btn.btn-mini.pull-right.span1(href='/#', ng-class="{'disabled btn-danger unavailable-link': !book.available, 'btn-success': book.available}") {{book.available && "Check out" || "Unavailable"}}
+        a.btn.btn-mini.pull-right.span1.book-title(href='/{{$index}}/#detail', ng-class="{'disabled btn-danger unavailable-link': !book.available, 'btn-success': book.available}", data-toggle='modal', ng-click='fetch($event)') {{book.available && "Details" || "Unavailable"}}
         br
         br
 
