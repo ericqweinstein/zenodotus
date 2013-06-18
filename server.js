@@ -36,6 +36,8 @@ app.use(express.favicon('public/img/favicon.ico'));
 
 /* Routes */
 
+var thisUser;
+
 app.get('/', function(req, res) {
   res.render('index', { cookieValid: req.signedCookies.rememberToken === '1'
                       , currentUser: req.session.currentUser });
@@ -62,6 +64,7 @@ app.post('/signup', function(req, res) {
   });
   
   res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
+  req.session.currentUser = thisUser = newUser;
   res.redirect('/');
 });
 
@@ -84,7 +87,7 @@ app.post('/login', function(req, res) {
 
       if (isMatch) {
         res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-        req.session.currentUser = user;
+        req.session.currentUser = thisUser = user;
 
         res.redirect('/');
       } else {
@@ -150,12 +153,58 @@ app.get('/users', function(req, res) {
   });
 });
 
+// JSON endpoint for the logged-in user's books
+//
+// TODO: Refactor, this is pretty jank
+app.get('/current_users_books', function(req, res) {
+  if (thisUser) {
+    res.json(thisUser.books);
+  } else {
+    res.json('Not logged in.');
+  }
+});
+
 app.post('/checkout', function(req, res) {
-  var bookIsbn = +req.body.ISBN;
+  var bookIsbn  = +req.body.ISBN
+    , bookTitle = req.body.title
+    , user      = thisUser;
+
   // !!! Unsafe !!!
+  //
+  // TODO: Handle where qty > 1,
+  // DRY up all this error handling
   db.book.update({ isbn: bookIsbn }, { $set : { available: false } }, function(err) {
     if (err) { console.log('An error occurred: ' + err); }
   });
+
+  db.user.findOneAndUpdate({ email : thisUser.email }
+                         , { $push : { books: { title: bookTitle, isbn: bookIsbn } } }
+                         , { new : true }
+                         , function(err, user) {
+                             if (err) { console.log('An error occurred: ' + err); }
+                             thisUser = user;
+                         });
+
+  res.redirect('/');
+});
+
+app.post('/return', function(req, res) {
+  var bookTitle = req.body.title
+    , bookIsbn  = +req.body.isbn
+    , user      = thisUser;
+
+  // !!! Unsafe !!!
+  db.book.update({ isbn: bookIsbn }, { $set : { available: true } }, function(err) {
+    if (err) { console.log('An error occurred: ' + err); }
+  });
+
+  db.user.findOneAndUpdate( { email : thisUser.email }
+                          , { $pull : { books: { title: bookTitle, isbn: bookIsbn } } }
+                          , { new : true }
+                          , function(err, user) {
+                              if (err) { console.log('An error occurred: ' + err); }
+                              thisUser = user;
+                          });
 
   res.redirect('/');
 });

@@ -1,20 +1,20 @@
 'use strict';
 
-zenodotus.factory('User', ['$resource', function($resource) {
-  var User = $resource('/users/:id', {id: '@id'});
+zenodotus.factory('UsersBooks', ['$resource', function($resource) {
+  var UsersBooks = $resource('/current_users_books');
 
-  return User;
+  return UsersBooks;
 }]);
 
-zenodotus.controller('UserCtrl', ['$scope', 'User', function($scope, User) {
-  $scope.users = User.query();
+zenodotus.controller('UserCtrl', ['$scope', 'UsersBooks', function($scope, UsersBooks) {
+  $scope.books = UsersBooks.query();
 
   $scope.search = function(query) {
     // !!! Unsafe !!!
     query = JSON.stringify(query);
 
-    User.query({query: query}, function(users) {
-      $scope.users = users;
+    UsersBooks.query({query: query}, function(books) {
+      $scope.books = books;
     });
   };
 }]);

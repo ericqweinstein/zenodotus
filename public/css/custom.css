@@ -12,6 +12,14 @@ li a:hover {
   text-decoration: none;
 }
 
+.hidden {
+  display: none;
+}
+
+.pull-up {
+  margin-top: -21px;
+}
+
 /* Header */
 
 .logo {
@@ -32,8 +40,8 @@ li a:hover {
   text-decoration: none;
 }
 
-.settings {
-  margin-right: -130px;
+.me-view {
+  margin-right: -158px;
 }
 
 .dropdown-menu.right {
