@@ -32,21 +32,8 @@ li a:hover {
   text-decoration: none;
 }
 
-.logo:focus {
-  color: #fff;
-  text-decoration: none;
-}
-
 .settings {
-  margin-right: -108px;
-}
-
-.dropdown ul a {
-  margin-left: 5px;
-}
-
-.dropdown a:hover {
-  text-decoration: none;
+  margin-right: -130px;
 }
 
 .signup {

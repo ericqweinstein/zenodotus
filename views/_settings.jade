@@ -1,8 +1,11 @@
 nav.settings
-  div.dropdown.pull-right
-    a.logo.dropdown-toggle(data-toggle='dropdown', id='dLabel', role='button', href='#') Settings
-    ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
-      a.text-success(href='/settings') Settings
-      br
-      a.text-success(href='/logout') Log out
+    div.navbar-inner.pull-right
+      ul.nav
+        li.dropdown
+          a.logo.dropdown-toggle(data-toggle='dropdown', id='dLabel', role='button', href='#') Settings
+          ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
+            li(role='presentation')
+              a.text-success(href='/settings') Settings
+            li(role='presentation')
+              a.text-success(href='/logout') Log out
 
