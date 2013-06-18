@@ -9,7 +9,7 @@ div.modal.hide.fade#detail(tabindex='-1', role='dialog', aria-labelledby='detail
         img(src='{{bookCoverLink}}')
         br
         input(type='hidden', name='ISBN', value='{{bookIsbn}}')
-        button(type='submit').btn.btn-success.pull-left.push-down Check out
+        button(type='submit', ng-class="{'disabled unavailable-link' : !bookIsAvailable}").btn.btn-success.pull-left.push-down {{bookIsAvailable && "Check out" || "Checked out"}}
       div.detail-right-column.span4(ng-model='bookDescription')
         p(ng-model='bookDescription') {{bookDescription}}
   div.modal-footer(ng-model='bookInfoLink')

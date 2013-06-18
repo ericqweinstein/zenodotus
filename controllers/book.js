@@ -17,6 +17,10 @@ zenodotus.factory('Book', ['$resource', function($resource) {
     return this.isbn;
   }
 
+  Book.prototype.isAvailable = function() {
+    return this.available;
+  }
+
   return Book;
 }]);
 
@@ -45,7 +49,8 @@ zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $h
   $scope.bookTitle       = null
 , $scope.bookDescription = null
 , $scope.bookCoverLink   = null
-, $scope.bookInfoLink    = null;
+, $scope.bookInfoLink    = null
+, $scope.bookIsAvailable = null;
 
   // Angular AJAX controller for retrieving
   // book data via the Google Books API
@@ -57,7 +62,8 @@ zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $h
         $scope.bookCoverLink   = data['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
         $scope.bookInfoLink    = data['items'][0]['volumeInfo']['infoLink'];
         $scope.bookTitle       = self.book.getTitle();
-        $scope.bookIsbn        = self.book.getIsbn();
+        $scope.bookIsbn        = self.book.getIsbn()
+        $scope.bookIsAvailable = self.book.isAvailable();
       }).
       error(function(data, status) {
         $scope.data   = data || 'Request failed.';

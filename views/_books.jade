@@ -5,11 +5,10 @@ div.row.books-container(ng-controller='BookCtrl')
       input(type='text', placeholder='Search', ng-model='searchText').input.search-query
 
     ul.books
-      li(ng-repeat='book in books | filter: searchText', ng-class="{'unavailable-detail' : !book.available}")
+      li(ng-repeat='book in books | filter: searchText')
         i.icon-book
-        span {{" " + book.title + " "}}
-        span ({{"Quantity: " + book.quantity}})
-        a.btn.btn-mini.pull-right.span1.book-title(href='/{{$index}}/#detail', ng-class="{'disabled btn-danger unavailable-link': !book.available, 'btn-success': book.available}", data-toggle='modal', ng-click='fetch($event)') {{book.available && "Details" || "Unavailable"}}
+        span(ng-class="{'unavailable-detail' : !book.available}") {{" " + book.title + " (Quantity: " + book.quantity + ")"}}
+        a.btn.btn-mini.btn-success.pull-right.span1.book-title(href='/{{$index}}/#detail', data-toggle='modal', ng-click='fetch($event)') Details
         br
         br
 
