@@ -5,6 +5,7 @@ div.modal.hide.fade#myBooksModal(tabindex='-1', role='dialog', aria-labelledby='
     h3#myBooksModalLabel My Books
   div.modal-body
     ul.books-out.span6
+      p(ng-class="{'hidden' : books.length > 0}") You don't have any books out.
       li(ng-repeat='book in books') {{book.title + " (" + book.isbn + ")"}}
         form.css-form#returnForm(name='returnForm', method='post', action='/return')
           button.btn.btn-mini.btn-success.pull-right.pull-up(type='submit', ng-class="{'hidden' : books.length < 1}") Return
