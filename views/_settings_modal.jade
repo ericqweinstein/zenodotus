@@ -6,13 +6,8 @@ div.modal.hide.fade#settingsModal(tabindex='-1', role='dialog', aria-labelledby=
   div.modal-body
     h4 Username:
     p #{currentUser.email}
-    h4 Books out:
-    ul.books-out.span4
-      each book in currentUser.books
-        li= book
-          a.btn.btn-mini.btn-success.pull-right(href='#') Return
-          br
-          br
+    h4 Change password:
+    p TK
   div.modal-footer
     button.btn.pull-right(data-dismiss='modal', aria-hidden='true') Close
 
