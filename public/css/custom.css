@@ -51,7 +51,7 @@ li a:hover {
   padding-bottom: 50px;
 }
 
-.books {
+.books, .books-out {
   list-style-type: none;
 }
 
