@@ -7,7 +7,7 @@ div.row.books-container(ng-controller='BookCtrl')
     ul.books
       li(ng-repeat='book in books | filter: searchText')
         i.icon-book
-        span(ng-class="{'unavailable-detail' : !book.available}") {{" " + book.title + " (Quantity: " + book.quantity + ")"}}
+        span(ng-class="{'unavailable-detail' : !book.available}") {{" " + book.title + " (" + book.available + " of " + book.quantity + " available)"}}
         a.btn.btn-mini.btn-success.pull-right.span1.book-title(href='/{{$index}}/#detail', data-toggle='modal', ng-click='fetch($event)') Details
         br
         br

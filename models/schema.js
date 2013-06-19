@@ -1,8 +1,6 @@
 'use strict';
 
 var mongoose  = require('mongoose')
-  , bcrypt    = require('bcrypt')
-  , SALT_WORK_FACTOR = 10
   , LOCAL_DB  = 'mongodb://localhost/hs-library'
   , REMOTE_DB = process.env.MONGOHQ_URL;
 
@@ -43,11 +41,11 @@ var bookSchema = mongoose.Schema({
   },
 
   available: {
-    type: Boolean,
+    type: Number,
     required: true,
     validate: [
-      function(v) { return typeof(v) === 'boolean'; },
-      'Availability must be true or false.'
+      function(v) { return v >= 0; },
+      'Availability must be positive.'
     ]
   }
 });
@@ -72,11 +70,6 @@ var userSchema = mongoose.Schema({
     ]
   },
 
-  password: {
-    type: String,
-    required: true
-  },
-
   admin: {
     type: Boolean,
     required: true,
@@ -90,43 +83,6 @@ var userSchema = mongoose.Schema({
     type: Array
   }
 });
-
-userSchema.pre('save', function(next) {
-  var user = this;
-  
-  // Hash the password if new or modified
-  if (!user.isModified('password')) {
-    return next;
-  }
-
-  // Generate a salt
-  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-    if (err) {
-      return next(err);
-    }
-
-    // Hash the password along with the new salt
-    bcrypt.hash(user.password, salt, function(err, hash) {
-      if (err) {
-        return next(err);
-      }
-
-      // Finally, override the cleartext password
-      // with the hashed one
-      user.password = hash;
-      next();
-    });
-  });
-});
-
-// Compare the submitted hashed password to the
-// password stored in the database
-userSchema.methods.comparePassword = function(possiblePassword, cb) {
-  bcrypt.compare(possiblePassword, this.password, function(err, isMatch) {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
-};
 
 var Book = mongoose.model('Book', bookSchema, 'book');
 var User = mongoose.model('User', userSchema, 'user');

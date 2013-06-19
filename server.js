@@ -36,63 +36,49 @@ app.use(express.favicon('public/img/favicon.ico'));
 
 /* Routes */
 
+// Save a reference to the current user
 var thisUser;
 
+// Render index view
 app.get('/', function(req, res) {
   res.render('index', { cookieValid: req.signedCookies.rememberToken === '1'
                       , currentUser: req.session.currentUser });
 });
 
+// Handle login (auth done by Hacker School)
 app.post('/login', function(req, res) {
-  // var userName  = req.body.firstName + ' ' + req.body.lastName
-  //   , userEmail = req.body.email;
+  var userName  = req.body.firstName + ' ' + req.body.lastName
+    , userEmail = req.body.email;
   
-  console.log('POST to /login detected. Setting cookie...');
-
-  res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-
-  console.log('Cookie set. Redirecting to index...');
-
-  res.redirect('/');
-
-    // , passwordError = 'Incorrect username/password combination.';
-
-  /* Check if user exists
+  // Look up the user if (s)he exists...
   db.user.findOne({ email: userEmail }, function(err, user) {
     if (err) {
       console.log(err.message);
       res.render('500', { message: err.message });
     }
-    if (!user) { // First time logging in
+    // ...or create a new user on first login.
+    if (!user) {
       var newUser = new db.user({ name: userName
                                 , email: userEmail
                                 , admin: false
                                 , books: [] });
+
+      newUser.save(function(err) {
+        if (err) {
+          console.log(err.message);
+          res.render('500', { message: err.message });
+        }
+      });
     }
 
-    newUser.save(function(err) {
-      if (err) {
-        console.log(err.message);
-        res.render('500', { message: err.message });
-      }
-    });
-
-    // Check hashed password against password in the database
-    // user.comparePassword(userPassword, function(err, isMatch) {
-      // if (err) console.log(err);
-
-      // if (isMatch) {
     res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
     req.session.currentUser = thisUser = user;
 
     res.redirect('/');
-    //  } else {
-    //    res.send(passwordError);
-    //  }
-    //});
-  }); */
+  });
 });
 
+// Clear cookies and session on logout
 app.get('/logout', function(req, res) {
   res.clearCookie('rememberToken');
   req.session.destroy();
@@ -113,6 +99,7 @@ app.get('/books', function(req, res) {
   });
 });
 
+// Add a book to the database
 app.post('/books', function(req, res) {
   var bookTitle = req.body.title.trim()
     , bookIsbn  = +req.body.isbn.trim()
@@ -121,7 +108,7 @@ app.post('/books', function(req, res) {
   var newBook = new db.book({ title: bookTitle
                             , isbn: bookIsbn
                             , quantity: bookQty
-                            , available: true });
+                            , available: bookQty });
 
   // TODO: Check if book is already in the DB
   // & tell user to ++ qty rather than add new
@@ -150,8 +137,6 @@ app.get('/users', function(req, res) {
 });
 
 // JSON endpoint for the logged-in user's books
-//
-// TODO: Refactor, this is pretty jank
 app.get('/current_users_books', function(req, res) {
   if (thisUser) {
     res.json(thisUser.books);
@@ -160,16 +145,16 @@ app.get('/current_users_books', function(req, res) {
   }
 });
 
+// Check out a book
 app.post('/checkout', function(req, res) {
   var bookIsbn  = +req.body.ISBN
     , bookTitle = req.body.title
     , user      = thisUser;
 
-  // !!! Unsafe !!!
+  // !!! Potentially unsafe !!!
   //
-  // TODO: Handle where qty > 1,
-  // DRY up all this error handling
-  db.book.update({ isbn: bookIsbn }, { $set : { available: false } }, function(err) {
+  // TODO: DRY up all this error handling
+  db.book.update({ isbn: bookIsbn }, { $inc : { available: -1 } }, function(err) {
     if (err) { console.log('An error occurred: ' + err); }
   });
 
@@ -184,13 +169,14 @@ app.post('/checkout', function(req, res) {
   res.redirect('/');
 });
 
+// Return a book
 app.post('/return', function(req, res) {
   var bookTitle = req.body.title
     , bookIsbn  = +req.body.isbn
     , user      = thisUser;
 
-  // !!! Unsafe !!!
-  db.book.update({ isbn: bookIsbn }, { $set : { available: true } }, function(err) {
+  // !!! Potentially unsafe !!!
+  db.book.update({ isbn: bookIsbn }, { $inc : { available: 1 } }, function(err) {
     if (err) { console.log('An error occurred: ' + err); }
   });
 
@@ -205,7 +191,7 @@ app.post('/return', function(req, res) {
   res.redirect('/');
 });
 
-// Handle errors
+// Handle requests for nonexistent routes
 app.use(function(req, res) {
   res.render('404', { message: 'Sorry, that page doesn\'t exist.' });
 });

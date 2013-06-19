@@ -18,7 +18,8 @@ zenodotus.controller('UserCtrl', ['$scope', '$http', 'UsersBooks', function($sco
     });
   };
 
-  // The attributes we'll get from the HS application
+  // Attributes we'll get when we
+  // authenticate with Hacker School
   $scope.userFirstName;
   $scope.userLastName;
   $scope.userEmail;
@@ -27,18 +28,25 @@ zenodotus.controller('UserCtrl', ['$scope', '$http', 'UsersBooks', function($sco
     var self = this
       , url  = 'https://www.hackerschool.com/auth?email=' + $scope.email + '&password=' + $scope.password + '&callback=JSON_CALLBACK';
 
+    // Our JSONP request that authenticates
+    // the user via hackerschool.com/auth
     $http.jsonp(url).
       success(function(data, status) {
         $scope.userFirstName = data['first_name'];
         $scope.userLastName  = data['last_name'];
-        // Redirect to server login path
-        // to upsert user and set cookie
-        $http({ method: 'POST', url: '/login'}).
+        var formData = { firstName: $scope.userFirstName, lastName: $scope.userLastName, email: $scope.email };
+        // Redirect to server login path on
+        // success to upsert user and set cookie
+        $http({ method: 'POST'
+              , url: '/login'
+              , data: jQuery.param(formData) // Apparently I gotta do all the serialization around here
+              , headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).
           success(function(data, status) {
-            console.log('Success!');
+            window.location = '/';
           }).
           error(function(data, status) {
-            console.log('Error.');
+            console.log(status);
+            console.log(data);
           });
       }).
       error(function(data, status) {
@@ -50,6 +58,7 @@ zenodotus.controller('UserCtrl', ['$scope', '$http', 'UsersBooks', function($sco
   };
 }]);
 
+/*
 zenodotus.directive('ngPasswordValid', function() {
   return {
     require: 'ngModel',
@@ -67,5 +76,5 @@ zenodotus.directive('ngPasswordValid', function() {
       });
     }
   };
-});
+}); */
 
