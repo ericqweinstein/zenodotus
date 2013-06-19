@@ -15,11 +15,11 @@ zenodotus.factory('Book', ['$resource', function($resource) {
 
   Book.prototype.getIsbn = function() {
     return this.isbn;
-  }
+  };
 
   Book.prototype.isAvailable = function() {
     return this.available;
-  }
+  };
 
   return Book;
 }]);
