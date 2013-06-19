@@ -18,7 +18,7 @@ zenodotus.factory('Book', ['$resource', function($resource) {
   };
 
   Book.prototype.isAvailable = function() {
-    return this.available;
+    return this.available > 0;
   };
 
   return Book;
