@@ -55,23 +55,3 @@ zenodotus.controller('UserCtrl', ['$scope', '$http', 'UsersBooks', function($sco
   };
 }]);
 
-/*
-zenodotus.directive('ngPasswordValid', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, elm, attrs, ctrl) {
-      ctrl.$parsers.unshift(function(possiblePassword) {
-        if (possiblePassword.length >= 8) {
-          // If the password is valid...
-          ctrl.$setValidity('pwd', true);
-          return possiblePassword;
-        } else {
-          // ...otherwise, return undefined (no model update)
-          ctrl.$setValidity('pwd', false);
-          return undefined;
-        }
-      });
-    }
-  };
-}); */
-
