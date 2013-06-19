@@ -56,7 +56,7 @@ zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $h
   // book data via the Google Books API
   $scope.fetch  = function($event) {
     var self = this;
-    $http({ method: 'JSONP', url: self.book.getUrl() }).
+    $http.jsonp(self.book.getUrl()).
       success(function(data, status) {
         $scope.bookDescription = data['items'][0]['volumeInfo']['description'];
         $scope.bookCoverLink   = data['items'][0]['volumeInfo']['imageLinks']['thumbnail'];

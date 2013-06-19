@@ -2,7 +2,7 @@
 
 $(function() {
 
-  // AJAX request for handling error
+  /* AJAX request for handling error
   // messages displayed inside modals.
 
   // Bind to the submit event on the login form
@@ -44,7 +44,7 @@ $(function() {
 
     // Prevent default handling of form
     e.preventDefault();
-  });
+  }); */
 
   // Open all external links in new windows.
 

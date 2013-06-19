@@ -6,7 +6,7 @@ zenodotus.factory('UsersBooks', ['$resource', function($resource) {
   return UsersBooks;
 }]);
 
-zenodotus.controller('UserCtrl', ['$scope', 'UsersBooks', function($scope, UsersBooks) {
+zenodotus.controller('UserCtrl', ['$scope', '$http', 'UsersBooks', function($scope, $http, UsersBooks) {
   $scope.books = UsersBooks.query();
 
   $scope.search = function(query) {
@@ -15,6 +15,37 @@ zenodotus.controller('UserCtrl', ['$scope', 'UsersBooks', function($scope, Users
 
     UsersBooks.query({query: query}, function(books) {
       $scope.books = books;
+    });
+  };
+
+  // The attributes we'll get from the HS application
+  $scope.userFirstName;
+  $scope.userLastName;
+  $scope.userEmail;
+
+  $scope.login = function() {
+    var self = this
+      , url  = 'https://www.hackerschool.com/auth?email=' + $scope.email + '&password=' + $scope.password + '&callback=JSON_CALLBACK';
+
+    $http.jsonp(url).
+      success(function(data, status) {
+        $scope.userFirstName = data['first_name'];
+        $scope.userLastName  = data['last_name'];
+        // Redirect to server login path
+        // to upsert user and set cookie
+        $http({ method: 'POST', url: '/login'}).
+          success(function(data, status) {
+            console.log('Success!');
+          }).
+          error(function(data, status) {
+            console.log('Error.');
+          });
+      }).
+      error(function(data, status) {
+        $scope.data   = data || 'Request failed.';
+        $scope.status = status;
+        console.log(status);
+        console.log(data);
     });
   };
 }]);

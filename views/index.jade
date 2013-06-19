@@ -17,7 +17,6 @@ html(ng-app='zenodotus')
   body
     include _header
     include _login_modal
-    include _signup_modal
     - if (cookieValid) {
         include _my_books_modal
     - }
@@ -35,10 +34,10 @@ html(ng-app='zenodotus')
     - if (cookieValid) {
         include _books
     - } else {
-        a(href='/#loginModal', role='button', data-toggle='modal').btn.btn-success.btn-large.span1.offset7 Log in!
+        a(href='/#loginModal', role='button', data-toggle='modal').btn.btn-success.btn-large.span1.offset7 Log in
     - }
 
-  - if (cookieValid && currentUser.admin) {
+  - if (cookieValid) { // && currentUser.admin) {
       include _book_form
   - }
 

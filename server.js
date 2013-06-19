@@ -43,58 +43,54 @@ app.get('/', function(req, res) {
                       , currentUser: req.session.currentUser });
 });
 
-app.post('/signup', function(req, res) {
-  var userName = req.body.fname.trim() + ' ' + req.body.lname.trim()
-    , email    = req.body.email
-    , password = req.body.password;
-
-  var newUser = new db.user({ name: userName
-                            , email: email
-                            , password: password
-                            , admin: false
-                            , books: [] });
-
-  // TODO: Check if email is already in the DB
-  // & tell user to log in rather than sign up
-  newUser.save(function(err) {
-    if (err) {
-      console.log(err.message);
-      res.render('500', { message: err.message });
-    }
-  });
-  
-  res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-  req.session.currentUser = thisUser = newUser;
-  res.redirect('/');
-});
-
 app.post('/login', function(req, res) {
-  var userEmail     = req.body.email
-    , userPassword  = req.body.password
-    , passwordError = 'Incorrect username/password combination.';
+  // var userName  = req.body.firstName + ' ' + req.body.lastName
+  //   , userEmail = req.body.email;
+  
+  console.log('POST to /login detected. Setting cookie...');
 
-  // Check if user exists
+  res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
+
+  console.log('Cookie set. Redirecting to index...');
+
+  res.redirect('/');
+
+    // , passwordError = 'Incorrect username/password combination.';
+
+  /* Check if user exists
   db.user.findOne({ email: userEmail }, function(err, user) {
     if (err) {
       console.log(err.message);
       res.render('500', { message: err.message });
     }
-    if (!user) res.send(passwordError);
+    if (!user) { // First time logging in
+      var newUser = new db.user({ name: userName
+                                , email: userEmail
+                                , admin: false
+                                , books: [] });
+    }
 
-    // Check hashed password against password in the database
-    user.comparePassword(userPassword, function(err, isMatch) {
-      if (err) console.log(err);
-
-      if (isMatch) {
-        res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-        req.session.currentUser = thisUser = user;
-
-        res.redirect('/');
-      } else {
-        res.send(passwordError);
+    newUser.save(function(err) {
+      if (err) {
+        console.log(err.message);
+        res.render('500', { message: err.message });
       }
     });
-  });
+
+    // Check hashed password against password in the database
+    // user.comparePassword(userPassword, function(err, isMatch) {
+      // if (err) console.log(err);
+
+      // if (isMatch) {
+    res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
+    req.session.currentUser = thisUser = user;
+
+    res.redirect('/');
+    //  } else {
+    //    res.send(passwordError);
+    //  }
+    //});
+  }); */
 });
 
 app.get('/logout', function(req, res) {
