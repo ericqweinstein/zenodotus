@@ -52,7 +52,7 @@ zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $h
 , $scope.bookInfoLink    = null
 , $scope.bookIsAvailable = null;
 
-  // Angular AJAX controller for retrieving
+  // Angular AJAX request for retrieving
   // book data via the Google Books API
   $scope.fetch  = function($event) {
     var self = this;
