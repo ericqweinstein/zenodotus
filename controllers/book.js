@@ -62,7 +62,7 @@ zenodotus.controller('BookCtrl', ['$scope', '$http', 'Book', function($scope, $h
         $scope.bookCoverLink   = data['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
         $scope.bookInfoLink    = data['items'][0]['volumeInfo']['infoLink'];
         $scope.bookTitle       = self.book.getTitle();
-        $scope.bookIsbn        = self.book.getIsbn()
+        $scope.bookIsbn        = self.book.getIsbn();
         $scope.bookIsAvailable = self.book.isAvailable();
       }).
       error(function(data, status) {
