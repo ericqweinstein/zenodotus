@@ -48,7 +48,7 @@ app.get('/', function(req, res) {
 // Handle login (auth done by Hacker School)
 app.post('/login', function(req, res) {
   var userName  = req.body.firstName + ' ' + req.body.lastName
-    , userEmail = req.body.email;
+    , userEmail = req.body.email.toLowerCase();
   
   // Look up the user if (s)he exists...
   db.user.findOne({ email: userEmail }, function(err, user) {
