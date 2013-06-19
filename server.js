@@ -72,7 +72,7 @@ app.post('/login', function(req, res) {
     }
 
     res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-    req.session.currentUser = thisUser = user;
+    req.session.currentUser = thisUser = user || newUser;
 
     res.redirect('/');
   });
