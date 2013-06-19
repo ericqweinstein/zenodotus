@@ -49,11 +49,8 @@ zenodotus.controller('UserCtrl', ['$scope', '$http', 'UsersBooks', function($sco
             console.log(data);
           });
       }).
-      error(function(data, status) {
-        $scope.data   = data || 'Request failed.';
-        $scope.status = status;
-        console.log(status);
-        console.log(data);
+      error(function() {
+        $scope.loginError = 'Authorization failed. (Please use your Hacker School login e-mail and password.)';
     });
   };
 }]);

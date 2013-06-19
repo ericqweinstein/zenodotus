@@ -12,7 +12,7 @@ div.modal.hide.fade#loginModal(tabindex='-1', role='dialog', aria-labelledby='lo
       p Hacker School password:
       input(type='password', name='password', placeholder='Password', ng-model='password', required)
       br
-      p.text-error#password-error
+      p.text-error(ng-show='loginForm.$error') {{loginError}}
       br
       button.btn.btn-success(ng-click='login()') Log in
       button.btn.pull-right(data-dismiss='modal', aria-hidden='true') Close
