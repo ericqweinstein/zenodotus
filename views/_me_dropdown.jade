@@ -2,7 +2,7 @@ nav.me-view
     div.navbar-inner.pull-right
       ul.nav
         li.dropdown
-          a.logo.dropdown-toggle(data-toggle='dropdown', id='dLabel', role='button', href='#') Me Me Me
+          a.logo.dropdown-toggle(data-toggle='dropdown', id='dLabel', role='button', href='#') #{currentUser.name}
           ul.dropdown-menu.right(role='menu', aria-labelledby='dLabel', ng-controller='UserCtrl')
             li(role='presentation')
               a(href='#myBooksModal', role='button', data-toggle='modal') My Books
