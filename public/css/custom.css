@@ -104,6 +104,7 @@ footer {
 .node-logo {
   width: 12%;
   height: 12%;
-  margin-left: -110px;
+  float: right;
+  margin-right: -110px;
 }
 

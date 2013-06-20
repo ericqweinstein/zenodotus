@@ -15,31 +15,31 @@ html(ng-app='zenodotus')
     script(src='user.js')
 
   body
-    include _header
-    include _login_modal
+    include partials/_header
+    include modals/_login_modal
     - if (cookieValid) {
-        include _my_books_modal
+        include modals/_my_books_modal
     - }
 
     div.hero-unit
       h1.big-indent Hacker School Library
       p.lead.big-indent.indent Programming books and resources
 
-      include _logo
+      include partials/_logo
 
     div.row(ng-controller='BookCtrl')
       div
         p.lead.notification We currently have {{count()}} and counting.
 
     - if (cookieValid) {
-        include _books
+        include partials/_books
     - } else {
         a(href='/#loginModal', role='button', data-toggle='modal').btn.btn-success.btn-large.span1.offset7 Log in
     - }
 
   - if (cookieValid && currentUser && currentUser.admin) {
-      include _book_form
+      include partials/_book_form
   - }
 
-  include _footer
+  include partials/_footer
 
