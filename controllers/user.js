@@ -6,6 +6,11 @@ zenodotus.factory('UsersBooks', ['$resource', function($resource) {
   return UsersBooks;
 }]);
 
+zenodotus.config(['$httpProvider', function($httpProvider) {
+  // CSRF header for all AJAX requests
+  $httpProvider.defaults.headers.common['X-CSRF-Token'] = jQuery('#csrf-token').attr('value');
+}]);
+
 zenodotus.controller('UserCtrl', ['$scope', '$http', 'UsersBooks', function($scope, $http, UsersBooks) {
   $scope.books = UsersBooks.query();
 

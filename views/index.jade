@@ -37,7 +37,7 @@ html(ng-app='zenodotus')
         a(href='/#loginModal', role='button', data-toggle='modal').btn.btn-success.btn-large.span1.offset7 Log in
     - }
 
-  - if (cookieValid && currentUser.admin) {
+  - if (cookieValid && currentUser && currentUser.admin) {
       include _book_form
   - }
 

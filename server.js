@@ -15,8 +15,7 @@
 
 var express = require('express')
   , http    = require('http')
-  , routes  = require('./routes')
-  , db      = require('./models/schema');
+  , routes  = require('./routes/routes');
 
 /* Configure server */
 
@@ -28,168 +27,48 @@ app.set('view engine', 'jade');
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('test secret'));
-app.use(express.session({}));
+app.use(express.session({ secret: 'test secret' }));
 app.use(app.router);
+app.use(express.csrf());
 app.use(express.static('public'));
 app.use(express.static('controllers'));
 app.use(express.favicon('public/img/favicon.ico'));
 
+/* CSRF protection */
+
+function csrf(req, res, next) {
+  res.locals.token = req.session._csrf;
+  next();
+}
+
 /* Routes */
 
-// Save a reference to the current user
-var thisUser;
-
 // Render index view
-app.get('/', function(req, res) {
-  res.render('index', { cookieValid: req.signedCookies.rememberToken === '1'
-                      , currentUser: req.session.currentUser });
-});
+app.get('/', csrf, routes.index);
 
 // Handle login (auth done by Hacker School)
-app.post('/login', function(req, res) {
-  var userName  = req.body.firstName + ' ' + req.body.lastName
-    , userEmail = req.body.email.toLowerCase();
-  
-  // Look up the user if (s)he exists...
-  db.user.findOne({ email: userEmail }, function(err, user) {
-    if (err) {
-      console.log(err.message);
-      res.render('500', { message: err.message });
-    }
-    // ...or create a new user on first login.
-    if (!user) {
-      var newUser = new db.user({ name: userName
-                                , email: userEmail
-                                , admin: false
-                                , books: [] });
-
-      newUser.save(function(err) {
-        if (err) {
-          console.log(err.message);
-          res.render('500', { message: err.message });
-        }
-      });
-    }
-
-    res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
-    req.session.currentUser = thisUser = user || newUser;
-
-    res.redirect('/');
-  });
-});
+app.post('/login', csrf, routes.login);
 
 // Clear cookies and session on logout
-app.get('/logout', function(req, res) {
-  res.clearCookie('rememberToken');
-  req.session.destroy();
-  res.redirect('/');
-});
+app.get('/logout', routes.logout);
 
 // JSON endpoint for books
-app.get('/books', function(req, res) {
-  var query = db.book.find(function(err) {
-    if (err) { console.log('An error occurred: ' + err.message); }
-  }).sort('title');
-
-  query.select('-_id -__v');
-
-  query.exec(function(err, books) {
-    if (err) { console.log('An error occurred: ' + err.message); }
-    res.json(books);
-  });
-});
+app.get('/books', csrf, routes.getBooks);
 
 // Add a book to the database
-app.post('/books', function(req, res) {
-  var bookTitle = req.body.title.trim()
-    , bookIsbn  = +req.body.isbn.trim()
-    , bookQty   = +req.body.quantity.trim();
-
-  var newBook = new db.book({ title: bookTitle
-                            , isbn: bookIsbn
-                            , quantity: bookQty
-                            , available: bookQty });
-
-  // TODO: Check if book is already in the DB
-  // & tell user to ++ qty rather than add new
-  newBook.save(function(err) {
-    if (err) {
-      console.log(err.message);
-      res.render('500', { message: err.message });
-    }
-  });
-
-  res.redirect('/');
-});
+app.post('/books', csrf, routes.addBook);
 
 // JSON endpoint for users
-app.get('/users', function(req, res) {
-  var query = db.user.find(function(err) {
-    if (err) { console.log('An error occurred: ' + err.message); }
-  }).sort('name');
-
-  query.select('name email books -_id');
-
-  query.exec(function(err, users) {
-    if (err) { console.log('An error occurred: ' + err.message); }
-    res.json(users);
-  });
-});
+app.get('/users', csrf, routes.getUsers);
 
 // JSON endpoint for the logged-in user's books
-app.get('/current_users_books', function(req, res) {
-  if (thisUser) {
-    res.json(thisUser.books);
-  } else {
-    res.json('Not logged in.');
-  }
-});
+app.get('/current_users_books', csrf, routes.getUsersBooks);
 
 // Check out a book
-app.post('/checkout', function(req, res) {
-  var bookIsbn  = +req.body.ISBN
-    , bookTitle = req.body.title
-    , user      = thisUser;
-
-  // !!! Potentially unsafe !!!
-  //
-  // TODO: DRY up all this error handling
-  db.book.update({ isbn: bookIsbn }, { $inc : { available: -1 } }, function(err) {
-    if (err) { console.log('An error occurred: ' + err); }
-  });
-
-  db.user.findOneAndUpdate({ email : thisUser.email }
-                         , { $push : { books: { title: bookTitle, isbn: bookIsbn } } }
-                         , { new : true }
-                         , function(err, user) {
-                             if (err) { console.log('An error occurred: ' + err); }
-                             thisUser = user;
-                         });
-
-  res.redirect('/');
-});
+app.post('/checkout', csrf, routes.checkout);
 
 // Return a book
-app.post('/return', function(req, res) {
-  var bookTitle = req.body.title
-    , bookIsbn  = +req.body.isbn
-    , user      = thisUser;
-
-  // !!! Potentially unsafe !!!
-  db.book.update({ isbn: bookIsbn }, { $inc : { available: 1 } }, function(err) {
-    if (err) { console.log('An error occurred: ' + err); }
-  });
-
-  db.user.findOneAndUpdate( { email : thisUser.email }
-                          , { $pull : { books: { title: bookTitle, isbn: bookIsbn } } }
-                          , { new : true }
-                          , function(err, user) {
-                              if (err) { console.log('An error occurred: ' + err); }
-                              thisUser = user;
-                          });
-
-  res.redirect('/');
-});
+app.post('/return', csrf, routes.return);
 
 // Handle requests for nonexistent routes
 app.use(function(req, res) {
