@@ -5,7 +5,7 @@ var db = require('../models/schema');
 var actions = {
   index: function(req, res) {
     res.render('index', { cookieValid: req.signedCookies.rememberToken === '1'
-                        , isAdmin: req.session.currentUser });
+                        , currentUser: req.session.currentUser });
   }
 
 , login: function(req, res) {
@@ -33,9 +33,9 @@ var actions = {
         });
       }
 
-      res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true });
+      res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true, httpOnly: true });
       req.session.currentUser = user || newUser;
-      res.cookie('user', req.session.currentUser.email, { maxAge: 36000000, signed: true });
+      res.cookie('user', req.session.currentUser.email, { maxAge: 36000000, signed: true, httpOnly: true });
 
       res.redirect('/');
     });
