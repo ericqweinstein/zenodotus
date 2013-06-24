@@ -56,7 +56,10 @@ var actions = {
     query.select('-_id -__v');
 
     query.exec(function(err, books) {
-      if (err) { console.log('An error occurred: ' + err.message); }
+      if (err) {
+        console.log('An error occurred: ' + err.message);
+        res.render('500', { message: err });
+      }
       res.json(books);
     });
   }
@@ -84,6 +87,10 @@ var actions = {
   }
 
 , getUsers: function(req, res) {
+    if (!isLoggedIn(req)) {
+      res.status(401).send('Unauthorized');
+      return;
+    }
     var query = db.user.find(function(err) {
       if (err) { console.log('An error occurred: ' + err.message); }
     }).sort('name');
@@ -113,8 +120,6 @@ var actions = {
       , user      = req.signedCookies.user;
 
     // !!! Potentially unsafe !!!
-    //
-    // TODO: DRY up all this error handling
     db.book.update({ isbn: bookIsbn }, { $inc : { available: -1 } }, function(err) {
       if (err) { console.log('An error occurred: ' + err); }
     });
@@ -146,6 +151,11 @@ var actions = {
                             });
     res.redirect('/');
   }
+};
+
+// Login helper function (TODO: Move to helpers.js)
+var isLoggedIn = function(req) {
+  return !!req.signedCookies.rememberToken;
 };
 
 module.exports = actions;
