@@ -44,7 +44,7 @@ function csrf(req, res, next) {
 /* Routes */
 
 // Render index view
-app.get('/', csrf, routes.index);
+app.get('/', routes.index);
 
 // Handle login (auth done by Hacker School)
 app.post('/login', csrf, routes.login);
@@ -53,16 +53,16 @@ app.post('/login', csrf, routes.login);
 app.get('/logout', routes.logout);
 
 // JSON endpoint for books
-app.get('/books', csrf, routes.getBooks);
+app.get('/books', routes.getBooks);
 
 // Add a book to the database
 app.post('/books', csrf, routes.addBook);
 
 // JSON endpoint for users
-app.get('/users', csrf, routes.getUsers);
+app.get('/users', routes.getUsers);
 
 // JSON endpoint for the logged-in user's books
-app.get('/current_users_books', csrf, routes.getUsersBooks);
+app.get('/current_users_books', routes.getUsersBooks);
 
 // Check out a book
 app.post('/checkout', csrf, routes.checkout);

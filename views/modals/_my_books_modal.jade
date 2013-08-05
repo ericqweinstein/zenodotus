@@ -11,6 +11,7 @@ div.modal.hide.fade#myBooksModal(tabindex='-1', role='dialog', aria-labelledby='
           button.btn.btn-mini.btn-success.pull-right.pull-up(type='submit', ng-class="{'hidden' : books.length < 1}") Return
           input(type='hidden', name='title', value='{{book.title}}')
           input(type='hidden', name='isbn', value='{{book.isbn}}')
+          input(type='hidden', name='_csrf', id='csrf-token', value=token)
   div.modal-footer
     button.btn.pull-right(data-dismiss='modal', aria-hidden='true') Close
 
