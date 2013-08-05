@@ -4,7 +4,7 @@ var db = require('../models/schema');
 
 var actions = {
   index: function(req, res) {
-    res.render('index', { cookieValid: req.signedCookies.rememberToken === '1'
+    res.render('index', { cookieValid: req.signedCookies.rememberToken === process.env.ZENODOTUS_REMEMBER_TOKEN
                         , currentUser: req.session.currentUser });
   }
 
@@ -33,7 +33,7 @@ var actions = {
         });
       }
 
-      res.cookie('rememberToken', '1', { maxAge: 36000000, signed: true, httpOnly: true });
+      res.cookie('rememberToken', process.env.ZENODOTUS_REMEMBER_TOKEN, { maxAge: 36000000, signed: true, httpOnly: true });
       req.session.currentUser = user || newUser;
       res.cookie('user', req.session.currentUser.email, { maxAge: 36000000, signed: true, httpOnly: true });
 
@@ -153,7 +153,7 @@ var actions = {
   }
 };
 
-// Login helper function (TODO: Move to helpers.js)
+// Login helper function
 var isLoggedIn = function(req) {
   return !!req.signedCookies.rememberToken;
 };
