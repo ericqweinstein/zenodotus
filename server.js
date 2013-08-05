@@ -27,7 +27,7 @@ app.set('view engine', 'jade');
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser(process.env.ZENODOTUS_COOKIE_SECRET));
-app.use(express.session({ secret: ZENODOTUS_SESSION }));
+app.use(express.session({ secret: process.env.ZENODOTUS_SESSION }));
 app.use(app.router);
 app.use(express.csrf());
 app.use(express.static('public'));
