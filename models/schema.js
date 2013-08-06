@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose  = require('mongoose')
+  , validates = require('./validators')
   , LOCAL_DB  = 'mongodb://localhost/hs-library'
   , REMOTE_DB = process.env.MONGOHQ_URL;
 
@@ -17,7 +18,7 @@ var bookSchema = mongoose.Schema({
     type: String,
     required: true,
     validate: [
-      function(v) { return v.match(/\S+/) && v !== ''; },
+      validates.title,
       'Book title must not be blank.'
     ]
   },
@@ -26,7 +27,7 @@ var bookSchema = mongoose.Schema({
     type: Number,
     required: true,
     validate: [
-      function(v) { return !isNaN(v) && Math.ceil(Math.log(v + 1) / Math.LN10) === 13; },
+      validates.isbn,
       'ISBN must be a 13-digit number without dashes.'
     ]
   },
@@ -35,7 +36,7 @@ var bookSchema = mongoose.Schema({
     type: Number,
     required: true,
     validate: [
-      function(v) { return v > 0; },
+      validates.quantity,
       'Quantity must be greater than zero.'
     ]
   },
@@ -44,7 +45,7 @@ var bookSchema = mongoose.Schema({
     type: Number,
     required: true,
     validate: [
-      function(v) { return v >= 0; },
+      validates.available,
       'Availability must be positive.'
     ]
   }
@@ -55,7 +56,7 @@ var userSchema = mongoose.Schema({
     type: String,
     required: true,
     validate: [
-      function(v) { return v.match(/\S+/) && v !== ''; },
+      validates.name,
       'Name must not be blank.'
     ]
   },
@@ -65,18 +66,14 @@ var userSchema = mongoose.Schema({
     required: true,
     index: { unique: true },
     validate: [
-      function(v) { return v.match(/(?:\S+)@(?:\S+)/); },
+      validates.email,
       'Please enter a valid e-mail address.'
     ]
   },
 
   admin: {
     type: Boolean,
-    required: true,
-    validate: [
-      function(v) { return typeof(v) === 'boolean'; },
-      'Admin state must be true or false.'
-    ]
+    required: true
   },
 
   books: {
