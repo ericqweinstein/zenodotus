@@ -5,7 +5,6 @@ div.add-books(ng-controller='BookCtrl')
     input.indent(type='text', name='title', placeholder='Title', ng-model='title', required)
     input.indent(type='text', name='isbn', placeholder='ISBN', ng-model='isbn', required)
     input.indent(type='text', name='quantity', placeholder='Quantity', ng-model='quantity', required)
-    input(type='hidden', name='_csrf', id='csrf-token', value=token)
 
     button.btn.btn-success.btn-small.indent(type='submit') Add
 
