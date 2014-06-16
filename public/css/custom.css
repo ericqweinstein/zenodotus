@@ -1,6 +1,7 @@
 /* General */
 
 .notification {
+  margin-left: 20px;
   text-align: center;
 }
 
@@ -26,6 +27,12 @@ li a:hover {
 
 .pull-up {
   margin-top: -21px;
+}
+
+#login-btn {
+  display: block;
+  margin: 0 auto;
+  width: 80px;
 }
 
 /* Header */

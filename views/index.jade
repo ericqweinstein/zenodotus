@@ -27,19 +27,20 @@ html(ng-app='zenodotus')
 
       include partials/_logo
 
-    div.row(ng-controller='BookCtrl')
-      div
-        p.lead.notification We currently have {{count()}} and counting.
+    div.container(id='page-content')
+      div.row(ng-controller='BookCtrl')
+        div
+          p.lead.notification We currently have {{count()}} and counting.
 
-    - if (cookieValid) {
-        include partials/_books
-    - } else {
-        a(href='/#loginModal', role='button', data-toggle='modal').btn.btn-success.btn-large.span1.offset7 Log in
+      - if (cookieValid) {
+          include partials/_books
+      - } else {
+          a(href='/#loginModal', role='button', data-toggle='modal', id='login-btn').btn.btn-success.btn-large Log in
+      - }
+
+    - if (cookieValid && currentUser && currentUser.admin) {
+        include partials/_book_form
     - }
-
-  - if (cookieValid && currentUser && currentUser.admin) {
-      include partials/_book_form
-  - }
 
   include partials/_footer
 
